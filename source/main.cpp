@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <time.h>
 #include "genetic.h"
+#include "fileIO.h""
 using namespace std;
 
 int map[V][V] = {{  0, 136,  32,  53, 162, 143, 180, 192,  83,  79},
@@ -21,6 +22,8 @@ int main()
 {
 	srand((unsigned)time(NULL));
 
+	IOManager* ioManager = new IOManager("./test.txt");
+	
 	int gen = 1; 
 	int gen_thres = 500;
 
@@ -34,11 +37,11 @@ int main()
 		population.push_back(temp);
 	}
 
-	cout<<"\n======Initial Population======\n";
-	cout<<"CHROMO     FITNESS VALUE\n";
+	ioManager->PrintToFile("\n======Initial Population======\n");
+	ioManager->PrintToFile("CHROMO     FITNESS VALUE\n");
 	for(auto &p : population)
-		cout<<p.chromosome<<' '<<p.fitness<<'\n'; 
-	cout<<'\n';
+		ioManager->PrintToFile(p.chromosome + " " + to_string(p.fitness) + "\n");
+	ioManager->PrintToFile("\n");
 
 	bool bFound = false; 
 	int temperature = 100;
@@ -47,7 +50,7 @@ int main()
 	//=======Main Loop=============================
 	while(temperature > 10 && gen <= gen_thres)
 	{
-		cout<<"Current Temperature : "<<temperature<<'\n';
+		ioManager->PrintToFile("Current Temperature : " + to_string(temperature) + "\n");
 		
 		sort(population.begin(), population.end(), lessThan);
 		vector<individual> newPopulation;
@@ -76,21 +79,23 @@ int main()
 				}
 			}
 		}
-
 		temperature = cooldown(temperature);
 		population = newPopulation;
 		
-		//cout<<"\n======Gen-"<<gen<<") Population======\n";
+		ioManager->PrintToFile("\n======Gen-" + to_string(gen) + ") Population======\n");
 		int average = 0, minVal = INT_MAX;
-		//cout<<"CHROMO     FITNESS VALUE\n";
+		
+		ioManager->PrintToFile("CHROMO     FITNESS VALUE\n");
 		for(auto &p : population)
 		{
-			//cout<<p.chromosome<<' '<<p.fitness<<'\n'; 
+			ioManager->PrintToFile(p.chromosome + " " + to_string(p.fitness) + "\n");
 			average += p.fitness;
 			minVal = min(minVal, p.fitness);
 		}
-		cout<<"-"<<gen<<"\'s AVERAGE = "<<average/POPULATION_SIZE<<", MIN : "<<minVal<<'\n';
-		//cout<<'\n';
+		ioManager->PrintToFile("AVERAGE = " + to_string(average/POPULATION_SIZE) + ", MIN : " + to_string(minVal) + "\n");
+		ioManager->PrintToFile("\n");
 		gen += 1;
 	}
+
+	delete ioManager;
 }
