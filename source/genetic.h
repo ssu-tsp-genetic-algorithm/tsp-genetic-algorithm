@@ -4,27 +4,62 @@
 #include <cstdlib>
 using namespace std;
 
-#define V 10
-#define START 0
-
-#define POPULATION_SIZE 10
-
-struct individual
+struct Node
 {
-	string chromosome;
-	int fitness;
+	double y;
+	double x;
+} typedef Gene;
+
+struct Chromosome
+{
+	vector<Gene> gene;
+	double fitnessVal;
 };
 
-int getRandNum(int start, int end);
+class GeneticSearch
+{
+public:
+	GeneticSearch();
 
-bool getIsContain(string s, char ch);
+	GeneticSearch(const vector<Node>& newCities);
 
-int cooldown(int temp);
+	void initPopulation(vector<Chromosome>& population);
 
-bool lessThan(struct individual t1, struct individual t2);
+	//population의 적합도를 평가하고 해당 값에 따라 오름차순으로 정렬
+	void fitness(vector<Chromosome>& population);
 
-int calculateFitness(string chromosome);
+	//Elitism 기반의 부모 선택 연산
+	void selectParents(vector<Chromosome>& population);
 
-string mutateGene(string chromosome);
+	//두 점 crossover 연산
+	vector<Chromosome> crossover(vector<Chromosome>& p1, vector<Chromosome>& p2);
 
-string createChromosome();
+	//단순 swap을 통한 mutate 연산
+	bool mutate(vector<Node>& child);
+
+public:
+	int getGenerationThres(){ return genThres; }
+
+private:
+	//두 좌표간의 거리를 구함
+	inline double getDistance(const Node& a, const Node& b);
+
+	//fitness 값을 비교하여 오름차순 조건을 반환
+	inline bool compChromosome(const Chromosome& c1, const Chromosome& c2);
+
+	//random 라이브러리 내 기능을 이용해 범위 내의 난수 반환
+	int getRandomIntVal(int lo, int hi);
+	
+private:
+	//도시 좌표 정보
+	vector<Node> cities;
+
+	//모집단 Size
+	const int populationSize = 10;
+	
+	//시작 노드 Idx
+	const int startIdx = 0;
+	
+	//최대 generation 수
+	const int genThres = 100;
+};
