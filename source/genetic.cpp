@@ -1,81 +1,98 @@
 #include "genetic.h"
-#include <limits.h>
+#include <algorithm>
 
-int getRandNum(int start, int end)
+GeneticSearch::GeneticSearch() {}
+
+GeneticSearch::GeneticSearch(const vector<Node>& newCities)
 {
-	int r = end - start;
-	int rnum = start + rand() % r;
-	return rnum;
+	cities = newCities;
 }
 
-bool getIsContain(string s, char ch)
+void GeneticSearch::initPopulation(vector<Chromosome>& population)
 {
-	for(auto &c : s) if(c == ch) return true;
-	return false;
-}
+	if(cities.size()==0) return; 
 
-int cooldown(int temp)
-{
-	return (999 * temp) / 1000;
-}
+	random_device rd;
+    mt19937 g(rd());
 
-bool lessThan(struct individual t1, struct individual t2)
-{
-	return t1.fitness < t2.fitness;
-}
-
-int calculateFitness(string chromosome)
-{
- 	int map[V][V] = {{  0, 136,  32,  53, 162, 143, 180, 192,  83,  79},
- 					 {136,   0,  75, 137,  17,  31,  56, 157, 178, 173},
- 					 { 32,  75,   0, 104, 173, 178,  53,  81, 190,  98},
- 					 { 53, 137, 104,   0, 137,  89, 101, 177,  72,  87},
- 					 {162,  17, 173, 137,   0,  91, 127,  81,  20, 120},
- 	 				 {143,  31, 178,  89,  91,   0,  87,  50,  78, 68},
- 					 {180,  56,  53, 101, 127,  87,   0, 152,  81, 129},
- 				 	 {192, 157,  81, 177,  81,  50, 152,   0,  20, 149},
- 					 { 83, 178, 190,  72,  20,  78,  81,  20,   0,  74},
- 					 { 79, 173,  98,  87, 120,  68, 129, 149,  74,  0}};
-
-	int fitness = 0;
-	for(int i=0; i<chromosome.size()-1; i++)
+	population.clear();
+	for(int i=0; i<populationSize; i++)
 	{
-		int from = chromosome[i] - '0';
-		int to = chromosome[i+1] - '0';
-		
-		if(map[from][to] == INT_MAX) return INT_MAX;
-		fitness += map[from][to];
+		shuffle(cities.begin(), cities.end(), g);
+		population.push_back({cities, 0.0f});
 	}
-	return fitness; 
 }
 
-string mutateGene(string chromosome)
+void GeneticSearch::fitness(vector<Chromosome>& population)
 {
-	while(true)
+	//모집단의 염색체 하나씩을 돌면서 fitness 계산
+	for(auto &ch : population)
 	{
-		int idxA = getRandNum(1, V);
-		int idxB = getRandNum(1, V);
-		if(idxA == idxB) continue;
-		swap(chromosome[idxA], chromosome[idxB]);
-		break;
-	}
-	return chromosome;
-}
+		vector<Node> child = ch.gene;
+		double fitnessSum = 0.0f;
 
-string createChromosome()
-{
-	string newChromosome = "0";
-
-	while(1)
-	{
-		if(newChromosome.size() == V)
+		Node prev = child[0];
+		for(int idx = 1; idx < child.size(); idx++) //총 경로 cost 게산
 		{
-			newChromosome += newChromosome[0];
-			break;
+			fitnessSum += getDistance(prev, child[idx]);
+			prev = child[idx];
 		}
-		int temp = getRandNum(1, V);
-		if(!getIsContain(newChromosome, (char)(temp + '0')))
-			newChromosome += (char)(temp + '0');
+		ch.fitnessVal = fitnessSum;
 	}
-	return newChromosome;
+	sort(population.begin(), population.end(), compChromosome);
 }
+
+void GeneticSearch::selectParents(vector<Chromosome>& population)
+{
+	//fitness에 따라 오름차순 정렬
+	sort(population.begin(), population.end(), compChromosome); 
+
+	//Elitism -> 상위 2개 집단을 고름
+	population.erase(population.begin(), population.begin()+2);
+}
+
+vector<Chromosome> GeneticSearch::crossover(vector<Chromosome>& p1, vector<Chromosome>& p2)
+{
+	vector<Chromosome> newChildChromosome;
+
+	int randIdx[2] = {getRandomIntVal(1, cities.size()-1)
+					  , getRandomIntVal(1, cities.size()-1)};
+
+	
+
+	return newChildChromosome;
+}
+
+bool GeneticSearch::mutate(vector<Node>& child)
+{
+	int rIdxA, rIdxB, t; //random index, try count
+	for(t=0; t<1e5; t++) 
+	{
+		rIdxA = getRandomIntVal(1, child.size()-1);
+		rIdxB = getRandomIntVal(1, child.size()-1);
+		if(rIdxA != rIdxB) break;
+	}
+	if(t == 1e5) return false; //1e5번의 try -> failed
+	swap(child[rIdxA], child[rIdxB]);
+	return true; //success
+}
+
+inline bool GeneticSearch::compChromosome(const Chromosome &c1, const Chromosome &c2)
+{
+  	return c1.fitnessVal < c2.fitnessVal;
+}
+
+inline double GeneticSearch::getDistance(const Node& a, const Node& b)
+{
+	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+int GeneticSearch::getRandomIntVal(int lo, int hi)
+{
+	if(lo > hi) swap(lo, hi); 
+	std::random_device rd;
+  	std::mt19937 gen(rd());
+  	std::uniform_int_distribution<int> dis(lo, hi);
+  	return dis(gen);
+}
+	
