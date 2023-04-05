@@ -1,15 +1,14 @@
 #include <iostream>
 #include <algorithm>
-#include <utility>
-#include <cstring>
 #include <ctime>
 #include <cstdlib>
+#include <ostream>
 #include <fstream>
 #include <sstream>
 #include "genetic.h"
 using namespace std;
 
-vector<Node> getDataFromTable(string fileLocation)
+vector<Node> readDataFromCsv(string fileLocation)
 {
     ifstream inFile(fileLocation);
     vector<Node> retCities;
@@ -26,7 +25,7 @@ vector<Node> getDataFromTable(string fileLocation)
             for(int j=0; j<2; j++)
             {
                 getline(ss, token, ',');
-                if(i==0) token.erase(0, 3);
+                if(i+j==0) token.erase(0, 3);
 
                 double &target = (j == 0 ? newNode.y : newNode.x);
                 target = std::stod(token);
@@ -41,16 +40,31 @@ vector<Node> getDataFromTable(string fileLocation)
     return retCities;
 }
 
+// CSV 파일로 출력하는 함수
+void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
+{
+    ofstream outFile(filename);
+    if (!outFile.is_open()) return;
+
+    outFile << "fitness : " << bestChromosome.fitnessVal << endl;
+    for(int i=1; i<bestChromosome.gene.size(); i++)
+    {
+        outFile << bestChromosome.gene[i-1].y <<", " << bestChromosome.gene[i-1].x<<", ";
+        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<endl;
+    }
+    outFile.close();
+    std::cout << "CSV file has been written: " << filename << std::endl;
+}
+
 int main()
 {
 	srand((unsigned)time(NULL));
-	vector<Node> cities = getDataFromTable("../2023_AI_TSP.csv");
+	vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
 	vector<Chromosome> population;
 
 	GeneticSearch* tspSolver = new GeneticSearch(cities);
 
 	tspSolver->initPopulation(population);
-
 	tspSolver->fitness(population);
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
 	{
@@ -70,6 +84,7 @@ int main()
 		}
 		cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
 	}
+    writeDataToCsv("../searchResult.csv", population[0]);
 	system("pause");
 
 	delete tspSolver;
