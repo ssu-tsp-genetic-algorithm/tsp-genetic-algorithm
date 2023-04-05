@@ -46,7 +46,7 @@ void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
     ofstream outFile(filename);
     if (!outFile.is_open()) return;
 
-    outFile << "fitness : " << bestChromosome.fitnessVal << endl;
+    outFile << bestChromosome.fitnessVal << endl;
     for(int i=1; i<bestChromosome.gene.size(); i++)
     {
         outFile << bestChromosome.gene[i-1].y <<", " << bestChromosome.gene[i-1].x<<", ";
