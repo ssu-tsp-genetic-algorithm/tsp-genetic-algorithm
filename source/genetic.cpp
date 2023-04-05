@@ -23,10 +23,12 @@ void GeneticSearch::initPopulation(vector<Chromosome>& population)
 
 	population.clear();
 	for(int i=0; i<populationSize; i++)
-	{
-		shuffle(cities.begin(), cities.end(), g);
-		population.push_back({cities, 0.0f});
-	}
+    {
+        vector<Node> temp = cities;
+        shuffle(temp.begin(), temp.end(), g);
+        temp.push_back(cities[0]);
+        population.push_back({temp, 0.0f});
+    }
 }
 
 void GeneticSearch::fitness(vector<Chromosome>& population)
@@ -80,7 +82,7 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
 	
 	//cout<<"crossover #2\n";
 	//-----본격 crossover --------------
-	vector<bool> visited(cities.size()+1, false); //중복 체크
+	vector<bool> visited(cities.size()+2, false); //중복 체크
 	Chromosome newChild; 
 	newChild.gene = vector<Gene>(cities.size());
 

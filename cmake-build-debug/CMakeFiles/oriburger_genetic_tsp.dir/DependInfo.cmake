@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/tsp-genetic-algorithm-master/source/genetic.cpp" "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.o" "gcc" "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.o.d"
-  "/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/tsp-genetic-algorithm-master/source/main.cpp" "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o" "gcc" "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o.d"
+  "E:/Other Project/oriburger_genetic_tsp/source/genetic.cpp" "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.obj" "gcc" "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.obj.d"
+  "E:/Other Project/oriburger_genetic_tsp/source/main.cpp" "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.obj" "gcc" "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.obj.d"
   )
 
 # Targets to which this target links.

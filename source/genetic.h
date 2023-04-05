@@ -58,7 +58,7 @@ private:
 	const int startIdx = 0;
 	
 	//최대 generation 수
-	const int genThres = 1000000;
+	const int genThres = 100000;
 
 	//최소 fitnessValue
 	double minFitnessValue = std::numeric_limits<double>::max();
