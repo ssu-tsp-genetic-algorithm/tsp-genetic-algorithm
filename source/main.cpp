@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include "genetic.h"
+#include "kmeans.h"
 using namespace std;
 
 vector<Node> readDataFromCsv(string fileLocation)
@@ -62,9 +63,9 @@ int main()
 	vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
 	vector<Chromosome> population;
 
-	GeneticSearch* tspSolver = new GeneticSearch(cities);
+	KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 3);
 
-	tspSolver->initPopulation(population);
+	tspSolver->initPopulationWithKmeansRandom(population);
 	tspSolver->fitness(population);
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
 	{

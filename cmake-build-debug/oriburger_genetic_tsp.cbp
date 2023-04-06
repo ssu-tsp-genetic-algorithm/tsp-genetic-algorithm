@@ -5,96 +5,112 @@
 		<Option title="oriburger_genetic_tsp"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\opt\;CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\;CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\lib\;CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\lib\cmake\;CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\lib\cmake\opencv4\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="E:/Other Project/oriburger_genetic_tsp/cmake-build-debug"/>
+				<Option working_dir="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="oriburger_genetic_tsp">
-				<Option output="E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/oriburger_genetic_tsp.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="E:/Other Project/oriburger_genetic_tsp/cmake-build-debug"/>
+				<Option output="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug/oriburger_genetic_tsp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="E:/Other Project/oriburger_genetic_tsp/source"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source"/>
+					<Add directory="/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 oriburger_genetic_tsp"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 oriburger_genetic_tsp"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="oriburger_genetic_tsp/fast">
-				<Option output="E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/oriburger_genetic_tsp.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="E:/Other Project/oriburger_genetic_tsp/cmake-build-debug"/>
+				<Option output="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug/oriburger_genetic_tsp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="E:/Other Project/oriburger_genetic_tsp/source"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source"/>
+					<Add directory="/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 oriburger_genetic_tsp/fast"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 oriburger_genetic_tsp/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="E:/Other Project/oriburger_genetic_tsp/cmake-build-debug"/>
+				<Option working_dir="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="E:/Other Project/oriburger_genetic_tsp/cmake-build-debug"/>
+				<Option working_dir="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="E:/Other Project/oriburger_genetic_tsp/source/genetic.cpp">
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source/genetic.cpp">
 			<Option target="oriburger_genetic_tsp"/>
 		</Unit>
-		<Unit filename="E:/Other Project/oriburger_genetic_tsp/source/genetic.h">
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source/genetic.h">
 			<Option target="oriburger_genetic_tsp"/>
 		</Unit>
-		<Unit filename="E:/Other Project/oriburger_genetic_tsp/source/main.cpp">
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source/kmeans.cpp">
 			<Option target="oriburger_genetic_tsp"/>
 		</Unit>
-		<Unit filename="E:/Other Project/oriburger_genetic_tsp/CMakeLists.txt">
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source/kmeans.h">
+			<Option target="oriburger_genetic_tsp"/>
+		</Unit>
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source/main.cpp">
+			<Option target="oriburger_genetic_tsp"/>
+		</Unit>
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/../../../../../../../../opt/homebrew/lib/cmake/opencv4/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/../../../../../../../../opt/homebrew/lib/cmake/opencv4/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/../../../../../../../../opt/homebrew/lib/cmake/opencv4/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/../../../../../../../../opt/homebrew/lib/cmake/opencv4/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\opt\homebrew\lib\cmake\opencv4\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

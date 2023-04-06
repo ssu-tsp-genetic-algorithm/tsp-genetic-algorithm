@@ -1,11 +1,11 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.obj"
-  "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.obj.d"
-  "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.obj"
-  "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.obj.d"
-  "liboriburger_genetic_tsp.dll.a"
-  "oriburger_genetic_tsp.exe"
-  "oriburger_genetic_tsp.exe.manifest"
+  "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.o"
+  "CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.o.d"
+  "CMakeFiles/oriburger_genetic_tsp.dir/source/kmeans.cpp.o"
+  "CMakeFiles/oriburger_genetic_tsp.dir/source/kmeans.cpp.o.d"
+  "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o"
+  "CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o.d"
+  "oriburger_genetic_tsp"
   "oriburger_genetic_tsp.pdb"
 )
 

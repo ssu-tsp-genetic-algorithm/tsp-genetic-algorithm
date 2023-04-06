@@ -1,6 +1,5 @@
 #include "genetic.h"
 #include <algorithm>
-#include <ctime>
 #include <cstdlib>
 
 GeneticSearch::GeneticSearch() {}

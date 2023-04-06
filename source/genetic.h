@@ -48,26 +48,27 @@ private:
     static bool compCoord(const Node& a, const Node& b);
 	
 private:
-	//도시 좌표 정보
-	vector<Node> cities;
 
-	//모집단 Size
-	const int populationSize = 30;
-	
-	//crossover 연산의 최대 범위 비율 (백분율)
+    //crossover 연산의 최대 범위 비율 (백분율)
 	const int maxCrossoverRate = 15;
 
 	//시작 노드 Idx
 	const int startIdx = 0;
 	
 	//최대 generation 수
-	const int genThres = 1000000;
+	const int genThres = 100000;
 
 	//최소 fitnessValue
 	double minFitnessValue = std::numeric_limits<double>::max();
 
     //현재 Gen의 평균 fitnessValue
     double currFitnessAvgValue = 0.0f;
+
+protected:
+    //도시 좌표 정보
+    vector<Node> cities;
+    //모집단 Size
+    const int populationSize = 30;
 
 public:
 	//generation 한계 (최대 gen)
