@@ -43,6 +43,9 @@ private:
 
 	//fitness 값을 비교하여 오름차순 조건을 반환
 	static bool compChromosome(const Chromosome& c1, const Chromosome& c2);
+
+    //좌표 오른차순 정렬 조건
+    static bool compCoord(const Node& a, const Node& b);
 	
 private:
 	//도시 좌표 정보
@@ -52,13 +55,13 @@ private:
 	const int populationSize = 30;
 	
 	//crossover 연산의 최대 범위 비율 (백분율)
-	const int maxCrossoverRate = 20;
+	const int maxCrossoverRate = 15;
 
 	//시작 노드 Idx
 	const int startIdx = 0;
 	
 	//최대 generation 수
-	const int genThres = 100000;
+	const int genThres = 1000000;
 
 	//최소 fitnessValue
 	double minFitnessValue = std::numeric_limits<double>::max();
