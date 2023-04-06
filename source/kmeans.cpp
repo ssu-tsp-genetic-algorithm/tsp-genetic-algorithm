@@ -68,7 +68,7 @@ void KmeansGeneticSearch::initPopulationWithKmeansRandom(vector<Chromosome> &pop
 
     //3개의 군집 생성
     vector<Node> group[3];
-    for(int i=0; i<cities.size(); i++)
+    for(int i=1; i<cities.size()-1; i++)
     {
         if(clusteredLabel.at<int>(i, 0) == 0)
             group[0].push_back(cities[i]);
@@ -85,13 +85,33 @@ void KmeansGeneticSearch::initPopulationWithKmeansRandom(vector<Chromosome> &pop
     population.clear();
     for(int i=0; i<populationSize; i++)
     {
-        for(int j=0;j<3;j++){
-            vector<Node> temp = group[j];
-            shuffle(temp.begin()+1, temp.end()-1, g);
+        for(int j=0;j<3;j++)
+        {
+            shuffle(group[j].begin(), group[j].end(), g);
         }
-        vector<Node> tmp = group[0];
-        tmp.insert(tmp.end(), group[1].begin(),group[1].end());
-        tmp.insert(tmp.end(), group[2].begin(),group[2].end());
+
+        vector<Node> tmp = {cities[0]};
+
+        if(clusteredLabel.at<int>(0,0)==0)
+        {
+            tmp.insert(tmp.end(), group[0].begin(), group[0].end());
+            tmp.insert(tmp.end(), group[1].begin(),group[1].end());
+            tmp.insert(tmp.end(), group[2].begin(),group[2].end());
+        }
+        else if(clusteredLabel.at<int>(0,0)==1)
+        {
+            tmp.insert(tmp.end(), group[1].begin(), group[1].end());
+            tmp.insert(tmp.end(), group[2].begin(),group[2].end());
+            tmp.insert(tmp.end(), group[0].begin(),group[0].end());
+        }
+        else
+        {
+            tmp.insert(tmp.end(), group[2].begin(), group[2].end());
+            tmp.insert(tmp.end(), group[0].begin(),group[0].end());
+            tmp.insert(tmp.end(), group[1].begin(),group[1].end());
+        }
+
+        tmp.push_back(cities[0]);
 
         population.push_back({tmp, 0.0f});
     }

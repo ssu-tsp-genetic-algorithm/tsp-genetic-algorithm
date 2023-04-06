@@ -63,10 +63,12 @@ int main()
 	vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
 	vector<Chromosome> population;
 
+//	GeneticSearch* tspSolver = new GeneticSearch(cities);
 	KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 3);
 
+//    tspSolver->initPopulation(population);
 	tspSolver->initPopulationWithKmeansRandom(population);
-	tspSolver->fitness(population);
+//	tspSolver->fitness(population);
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
 	{
 		//부모 선택 & replace
