@@ -2,13 +2,13 @@
 #include <algorithm>
 #include <ctime>
 #include <cstdlib>
-#include <iostream>
 
 GeneticSearch::GeneticSearch() {}
 
 GeneticSearch::GeneticSearch(const vector<Node>& newCities)
 {
 	cities = newCities;
+    cities.push_back(cities[0]); //돌아오도록
 
 	int idx = 0; //도시 id 초기화
 	for(auto &node : cities)
@@ -25,8 +25,7 @@ void GeneticSearch::initPopulation(vector<Chromosome>& population)
 	for(int i=0; i<populationSize; i++)
     {
         vector<Node> temp = cities;
-        shuffle(temp.begin(), temp.end(), g);
-        temp.push_back(cities[0]);
+        shuffle(temp.begin()+1, temp.end()-1, g);
         population.push_back({temp, 0.0f});
     }
 }
@@ -74,15 +73,18 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
 	const int maxCrossoverLength = cities.size() * maxCrossoverRate / 100;
 	while(loIdx == hiIdx)
 	{
-		loIdx = getRandomIntVal(0, cities.size()/2);
-		hiIdx = getRandomIntVal(loIdx+1, cities.size()-1);
-		if(abs(loIdx-hiIdx) > maxCrossoverLength) 
-			hiIdx = loIdx + maxCrossoverLength; //cross 최대 범위를 넘지 않도록 
+		loIdx = getRandomIntVal(0, cities.size() - 2);
+		hiIdx = getRandomIntVal(loIdx+1, loIdx + maxCrossoverLength);
+        hiIdx %= (cities.size()-1);
+
+        if(loIdx > hiIdx) swap(loIdx, hiIdx);
+        if(hiIdx - loIdx > maxCrossoverLength) hiIdx = loIdx + maxCrossoverLength;
+        hiIdx = (hiIdx == cities.size()-1 ?  hiIdx - 1 : hiIdx); //돌아가는 부분은 제외
 	}
 	
 	//cout<<"crossover #2\n";
 	//-----본격 crossover --------------
-	vector<bool> visited(cities.size()+2, false); //중복 체크
+	vector<bool> visited(cities.size() + 10, false); //중복 체크
 	Chromosome newChild; 
 	newChild.gene = vector<Gene>(cities.size());
 
@@ -115,8 +117,8 @@ bool GeneticSearch::mutate(vector<Node>& child)
 	int rIdxA, rIdxB, t; //random index, try count
 	for(t=0; t<1e5; t++) 
 	{
-		rIdxA = getRandomIntVal(1, child.size()-1);
-		rIdxB = getRandomIntVal(1, child.size()-1);
+		rIdxA = getRandomIntVal(1, child.size()-2);
+		rIdxB = getRandomIntVal(1, child.size()-2);
 		if(rIdxA != rIdxB) break;
 	}
 	if(t == 1e5) return false; //1e5번의 try -> failed
@@ -127,6 +129,11 @@ bool GeneticSearch::mutate(vector<Node>& child)
 bool GeneticSearch::compChromosome(const Chromosome &c1, const Chromosome &c2)
 {
   	return c1.fitnessVal < c2.fitnessVal;
+}
+
+bool GeneticSearch::compCoord(const Node &a, const Node &b)
+{
+    return pair<int, int>(a.y, a.x) < pair<int, int>(b.y, b.x);
 }
 
 inline double GeneticSearch::getDistance(const Node& a, const Node& b)
