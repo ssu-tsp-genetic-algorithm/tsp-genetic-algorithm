@@ -5,6 +5,7 @@
 #include <ostream>
 #include <fstream>
 #include <sstream>
+#include "treeRouteFinder.h"
 #include "genetic.h"
 using namespace std;
 
@@ -63,7 +64,22 @@ int main()
 	vector<Chromosome> population;
 
 	GeneticSearch* tspSolver = new GeneticSearch(cities);
+    TreeRouteFinder* subRouteFinder = new TreeRouteFinder(tspSolver->getCities());
 
+    population.push_back(Chromosome());
+    for(int areaId=0; areaId < subRouteFinder->getTotalAreaCount(); areaId++)
+    {
+        vector<Node> areaMinRoute;
+        const int startIdx = subRouteFinder->getAreaStartIndex(areaId);
+        subRouteFinder->findAreaMinimumRoute(areaId, startIdx, areaMinRoute, 0);
+        areaMinRoute = subRouteFinder->getMinRoute();
+        subRouteFinder->resetFindInfo();
+
+        population[0].gene.insert(population[0].gene.end(), areaMinRoute.begin(), areaMinRoute.end());
+    }
+    writeDataToCsv("../searchResult.csv", population[0]);
+
+    /*
 	tspSolver->initPopulation(population);
 	tspSolver->fitness(population);
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
@@ -72,7 +88,7 @@ int main()
 		tspSolver->selectParents(population);
 
 		//crossover, 상위 10개 idx와 랜덤한 idx
-		for(int cIdx=0; cIdx<10; cIdx++) 
+		for(int cIdx=0; cIdx<10; cIdx++)
 		{
 			int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
 			Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
@@ -86,6 +102,7 @@ int main()
 	}
     writeDataToCsv("../searchResult.csv", population[0]);
 	system("pause");
+    */
 
 	delete tspSolver;
 }

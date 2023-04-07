@@ -1,6 +1,8 @@
+#pragma  once
 #include <vector>
 #include <random>
 #include <cstdlib>
+#include <unordered_map>
 using namespace std;
 
 struct Node
@@ -8,6 +10,7 @@ struct Node
 	double y;
 	double x;
 	int id;
+    int areaId;
 } typedef Gene;
 
 struct Chromosome
@@ -38,30 +41,25 @@ public:
 	bool mutate(vector<Node>& child);
 
 private:
-	//두 좌표간의 거리를 구함
-	inline double getDistance(const Node& a, const Node& b);
-
 	//fitness 값을 비교하여 오름차순 조건을 반환
 	static bool compChromosome(const Chromosome& c1, const Chromosome& c2);
 
-    //좌표 오른차순 정렬 조건
+    //좌표의 오름차순 정렬 조건 반환 (원점과 가까운 순서)
     static bool compCoord(const Node& a, const Node& b);
-	
-private:
-	//도시 좌표 정보
-	vector<Node> cities;
 
+private:
 	//모집단 Size
 	const int populationSize = 30;
 	
 	//crossover 연산의 최대 범위 비율 (백분율)
 	const int maxCrossoverRate = 15;
-
-	//시작 노드 Idx
-	const int startIdx = 0;
 	
 	//최대 generation 수
 	const int genThres = 1000000;
+
+private:
+    //도시 좌표 정보
+    vector<Node> cities;
 
 	//최소 fitnessValue
 	double minFitnessValue = std::numeric_limits<double>::max();
@@ -81,4 +79,9 @@ public:
 
 	//random 라이브러리 내 기능을 이용해 범위 내의 난수 반환
 	int getRandomIntVal(int lo, int hi);
+
+    //두 좌표간의 거리를 구함
+    static double getDistance(const Node& a, const Node& b);
+
+    vector<Node>& getCities() { return cities; }
 };

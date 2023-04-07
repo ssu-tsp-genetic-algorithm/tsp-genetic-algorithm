@@ -8,4 +8,4 @@ include_directories(source)
 add_executable(oriburger_genetic_tsp
         source/genetic.cpp
         source/genetic.h
-        source/main.cpp)
+        source/main.cpp source/treeRouteFinder.h source/treeRouteFinder.cpp)
