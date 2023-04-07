@@ -1,6 +1,8 @@
 #include "genetic.h"
 #include <algorithm>
 #include <cstdlib>
+#include <iostream>
+
 
 GeneticSearch::GeneticSearch() {}
 
@@ -60,7 +62,7 @@ void GeneticSearch::selectParents(vector<Chromosome>& population)
 
 	//순위 기반 선택 -> 상위 20개 집단을 고름
 	if(population.size() >= 20)
-		population.erase(population.begin()+21, population.end());
+		population.erase(population.begin()+20, population.end());
 }
 
 Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
@@ -80,7 +82,7 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
         if(hiIdx - loIdx > maxCrossoverLength) hiIdx = loIdx + maxCrossoverLength;
         hiIdx = (hiIdx == cities.size()-1 ?  hiIdx - 1 : hiIdx); //돌아가는 부분은 제외
 	}
-	
+
 	//cout<<"crossover #2\n";
 	//-----본격 crossover --------------
 	vector<bool> visited(cities.size() + 10, false); //중복 체크
@@ -97,10 +99,16 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
 	//cout<<"crossover #3\n";
 	//p2에서 나머지를 땡겨옴
 	int idx = (loIdx == 0 ? hiIdx + 1 : 0);
-	for(auto &gene : p2.gene)
+	//for(auto &gene : p2.gene)
+
+    for(int i=0; i<p2.gene.size(); i++)
 	{
+        auto& gene = p2.gene[i];
+
+
+        //여기가 문졔인 것.. 문재인 양산 복귀 성공.
         int target = gene.id;
-		if(visited[target]) continue;
+		if(visited[target] && i!=1000) continue;
 		while(newChild.gene[idx].id != 0) idx = (hiIdx + 1) % cities.size(); //교차 영역은 건너뜀
 
 		newChild.gene[idx] = gene;
@@ -108,6 +116,7 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
 		
 		idx = (idx + 1) % cities.size(); //circular idx
 	}
+
 	return newChild;
 }
 

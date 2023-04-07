@@ -370,7 +370,61 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/genetic.cpp.o: /Users/junseo/Documen
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cctype \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/wctype.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_wctrans_t.h
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_wctrans_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iostream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/ios \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__locale \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/mutex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__mutex_base \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/system_error \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__errc \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cerrno \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/locale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/locale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_locale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_xlocale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_ctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/__wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_stdlib.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_time.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_wchar.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/istream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/ostream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/bitset \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/locale \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/streambuf \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/nl_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_u_char.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_u_short.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_u_int.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_caddr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_blkcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_blksize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_gid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_in_addr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_in_port_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_ino_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_ino64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_key_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_nlink_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_useconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_suseconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_def.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_setsize.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_set.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_clr.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_zero.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_isset.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fsblkcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_nl_item.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bsd_locale_defaults.h
 
 CMakeFiles/oriburger_genetic_tsp.dir/source/kmeans.cpp.o: /Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/source/kmeans.cpp \
   /Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/source/genetic.h \
@@ -1543,8 +1597,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/result_set.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iostream:
-
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/params.h:
 
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/matrix.h:
@@ -1578,6 +1630,46 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/optim.hpp:
 
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/utility.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/complex:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/persistence.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/mat.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/float.h:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/float.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cfloat:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/types.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/saturate.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/traits.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/check.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/vsx_utils.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cvstd_wrapper.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/videoio.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cvstd.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/base.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/any.h:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/arm_neon.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/opencv_modules.hpp:
+
+/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/source/kmeans.h:
+
+/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/source/kmeans.cpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bsd_locale_defaults.h:
 
@@ -1619,97 +1711,31 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/nl_types.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/streambuf:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_uint16_t.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/locale:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cstring:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_wchar.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/unique.h:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/photo.hpp:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/bitset:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/objdetect/aruco_dictionary.hpp:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_ucontext.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_stdlib.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/unordered_map:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_stdio.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/ostream:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/__wctype.h:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/stitching/detail/camera.hpp:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iosfwd:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/ostreambuf_iterator.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_locale.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/locale.h:
 
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/saving.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/system_error:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/video.hpp:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__mutex_base:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/mutex:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__locale:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/ios:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/istream:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/complex:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/persistence.hpp:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/mat.hpp:
-
-/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/float.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cfloat:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/comp_ref_type.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__thread/poll_with_backoff.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/fast_math.hpp:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/saturate.hpp:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/traits.hpp:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cvstd_wrapper.hpp:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/dynamic_bitset.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/config.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/reference_wrapper.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__debug:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/array:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/any.h:
-
-/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/arm_neon.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__variant/monostate.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cv_cpu_dispatch.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_ctype.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/count_if.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core.hpp:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/objdetect/charuco_detector.hpp:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/machine/endian.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/opencv.hpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/wctype.h:
 
@@ -1735,13 +1761,9 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/random:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/bitset:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_pid_t.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_uint16_t.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cstring:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/unique.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_ctype.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/transform.h:
 
@@ -1817,8 +1839,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/is_heap_until.h:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/check.hpp:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/rotate.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/partial_sort_copy.h:
@@ -1831,9 +1851,15 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/min_element.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/sift_down.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cerrno:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/locale.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/min.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_wchar.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/inplace_merge.h:
 
@@ -1853,11 +1879,11 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/find_first_of.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_wctype.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/malloc/_malloc.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/ranges_operations.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_wctype.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/find_end.h:
 
@@ -1880,6 +1906,12 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/equal_range.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/equal.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_ctype.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/count_if.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/is_heap.h:
 
@@ -1935,33 +1967,33 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/projected.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/float.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/prev.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/locale.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/locale:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iosfwd:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/unordered_map:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/ostreambuf_iterator.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_stdio.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/move_iterator.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_u_int16_t.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cwctype:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/neon_utils.hpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/istreambuf_iterator.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/erase_if_container.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/video.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__mutex_base:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__utility/to_underlying.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__utility/pair.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/move_backward.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cv_cpu_dispatch.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__variant/monostate.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/for_each.h:
 
@@ -2005,21 +2037,27 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__memory/pointer_safety.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/istream:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__tree:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sched.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/pthread/qos.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/stddef.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cvdef.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/ostream_iterator.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_pthread/_pthread_once_t.h:
 
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/neon_utils.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_u_int16_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cwctype:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_pthread/_pthread_mutexattr_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_locale.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_pthread/_pthread_mutex_t.h:
 
@@ -2077,10 +2115,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/stdexcept:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/videoio.hpp:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cvstd.hpp:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__memory/allocation_guard.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/advance.h:
@@ -2104,6 +2138,8 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/tuple:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/bind_front.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iostream:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/binary_negate.h:
 
@@ -2143,6 +2179,10 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__tuple:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/unwrap_iter.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_string.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bit_reference:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/utility:
@@ -2164,6 +2204,16 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/__stddef_max_align_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/typeinfo:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/dynamic_bitset.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/config.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/array:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/reference_wrapper.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__debug:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/stdint.h:
 
@@ -2191,11 +2241,9 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/string_view:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_string.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/unwrap_iter.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/strings.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__locale:
 
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/matx.hpp:
 
@@ -2222,6 +2270,12 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/video/background_segm.hpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/clamp.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/objdetect/charuco_detector.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/opencv.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/machine/endian.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/iter_swap.h:
 
@@ -2285,10 +2339,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/pthread.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_ctype.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_pid_t.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_uint64_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/syslimits.h:
@@ -2319,11 +2369,23 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/limits.h:
 
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/photo.hpp:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/objdetect/aruco_dictionary.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale/_stdlib.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional_base:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__utility/forward.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/AvailabilityInternal.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/fast_math.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/comp_ref_type.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__thread/poll_with_backoff.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/minmax_element.h:
 
@@ -2340,8 +2402,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/lexicographical_compare.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/arm/arch.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/types.hpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_fd_isset.h:
 
@@ -2371,10 +2431,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cstddef:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/ostream:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_ucontext.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/concepts.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/arm/signal.h:
@@ -2382,6 +2438,10 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_time_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/string.h:
+
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/stitching/detail/camera.hpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/xlocale.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/binary_function.h:
 
@@ -2459,9 +2519,11 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_mbstate_t.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/includes.h:
+/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/cvdef.h:
 
-/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/source/kmeans.cpp:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/stddef.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/includes.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/operations.h:
 
@@ -2473,7 +2535,11 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__memory/auto_ptr.h:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/opencv_modules.hpp:
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__hash_table:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/set_intersection.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_xlocale.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types.h:
 
@@ -2495,11 +2561,7 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_int32_t.h:
 
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/base.hpp:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__memory/compressed_pair.h:
-
-/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/core/vsx_utils.hpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_intptr_t.h:
 
@@ -2507,21 +2569,17 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/source/genetic.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__hash_table:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_xlocale.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/set_intersection.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__functional/unary_negate.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/streambuf:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/upper_bound.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_nl_item.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/sstream:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types/_nl_item.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/adjacent_find.h:
 
@@ -2538,10 +2596,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_u_short.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__availability:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cerrno:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__algorithm/sift_down.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/sys/_types/_wchar_t.h:
 
@@ -2561,6 +2615,8 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__undef_macros:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/ios:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__bits:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__config_site:
@@ -2570,8 +2626,6 @@ CMakeFiles/oriburger_genetic_tsp.dir/source/main.cpp.o: /Users/junseo/Documents/
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__iterator/access.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/__memory/allocator.h:
-
-/Users/junseo/Documents/Univ/2023-1/인공지능/2.\ 프로젝트/project1TSP/source/kmeans.h:
 
 /opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4/opencv2/flann/index_testing.h:
 

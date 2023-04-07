@@ -112,7 +112,6 @@ void KmeansGeneticSearch::initPopulationWithKmeansRandom(vector<Chromosome> &pop
         }
 
         tmp.push_back(cities[0]);
-
         population.push_back({tmp, 0.0f});
     }
 }

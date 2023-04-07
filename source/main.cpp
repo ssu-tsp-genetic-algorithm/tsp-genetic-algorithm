@@ -69,6 +69,8 @@ int main()
 //    tspSolver->initPopulation(population);
 	tspSolver->initPopulationWithKmeansRandom(population);
 //	tspSolver->fitness(population);
+
+
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
 	{
 		//부모 선택 & replace
