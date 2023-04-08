@@ -43,18 +43,21 @@ private:
     vector<bool> visited;
 
     //최소 cost
-    double minCost = INF;
+    vector<double> minCost;
 
     //찾은 최소의 경로
-    vector<Node> minRoute;
+    vector<vector<Node>> minRoute;
 
 public:
     //총 AreaCount
     int getTotalAreaCount() const { return areaSideCount * areaSideCount; }
 
-    int getAreaStartIndex(int areaId) { minCost = INF; return citiesGroup[areaId][0]; }
+    //각 영역의 시작 정점 id
+    int getAreaStartIndex(int areaId) { return citiesGroup[areaId][0]; }
 
-    void resetFindInfo() { visited.clear(); minCost = INF; }
+    //해당 영역의 최소 route 반환
+    vector<Node> getMinRoute(int areaId) { return minRoute[areaId]; }
 
-    vector<Node> getMinRoute() { return minRoute; }
+    //도시 배열 반환
+    vector<Node>& getCities() { return cities; }
 };

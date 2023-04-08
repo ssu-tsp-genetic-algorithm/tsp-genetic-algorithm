@@ -1,6 +1,7 @@
 #include "genetic.h"
 #include <algorithm>
 #include <ctime>
+#include <iostream>
 #include <cstdlib>
 
 GeneticSearch::GeneticSearch() {}
@@ -9,13 +10,6 @@ GeneticSearch::GeneticSearch(const vector<Node>& newCities)
 {
 	cities = newCities;
     cities.push_back(cities[0]); //돌아오도록 set
-
-    int idx = 0; //도시 id 초기화
-	for(auto &node : cities)
-    {
-        if(node.id) continue; //마지막은 pass (시작 정점은 id 0)
-        node.id = idx++;
-    }
 }
 
 void GeneticSearch::initPopulation(vector<Chromosome>& population)
@@ -31,6 +25,21 @@ void GeneticSearch::initPopulation(vector<Chromosome>& population)
         shuffle(temp.begin()+1, temp.end()-1, g);
         population.push_back({temp, 0.0f});
     }
+}
+
+void GeneticSearch::initPopulation(vector<Chromosome>& population, const Chromosome& targetChromosome)
+{
+    if(targetChromosome.gene.size()==0) return;
+
+    for(int i=0; i<targetChromosome.gene.size(); i++)
+    {
+        const Node& node = targetChromosome.gene[i];
+        cout<<node.id<<") "<<node.y<<' '<<node.x<<'\n';
+    }
+
+    population.clear();
+	for(int i=0; i<populationSize; i++)
+        population.push_back(targetChromosome);
 }
 
 void GeneticSearch::fitness(vector<Chromosome>& population)
@@ -106,7 +115,7 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
     {
         auto& gene = p2.gene[i];
         int target = gene.id;
-        if(visited[target] && idx != 0) continue;
+        if(visited[target] && idx != p2.gene.size()-1) continue;
         while(newChild.gene[idx].id != 0) idx = (hiIdx + 1) % cities.size(); //교차 영역은 건너뜀
 
         newChild.gene[idx] = gene;
@@ -120,14 +129,21 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
 bool GeneticSearch::mutate(vector<Node>& child)
 {
 	int rIdxA, rIdxB, t; //random index, try count
+    const int maxMutateLength = cities.size() * maxMutateRate / 100;
 	for(t=0; t<1e5; t++) 
 	{
 		rIdxA = getRandomIntVal(1, child.size()-2);
 		rIdxB = getRandomIntVal(1, child.size()-2);
-		if(rIdxA != rIdxB) break;
+		if(rIdxA != rIdxB)
+        {
+            if(rIdxA > rIdxB) swap(rIdxA, rIdxB);
+            break;
+        }
 	}
 	if(t == 1e5) return false; //1e5번의 try -> failed
-	swap(child[rIdxA], child[rIdxB]);
+    if(rIdxB - rIdxA > maxMutateLength) rIdxB = min((int)cities.size()-2, rIdxA + maxMutateLength);
+
+    shuffle(child.begin()+rIdxA, child.begin()+rIdxB, std::default_random_engine());
 	return true; //success
 }
 
@@ -152,7 +168,7 @@ int GeneticSearch::getRandomIntVal(int lo, int hi)
 	//std::random_device rd;
   	//std::mt19937 gen(rd());
   	//std::uniform_int_distribution<int> dis(lo, hi);
-	//return //dis(gen);
+	//return dis(std::default_random_engine());
 	return (rand() % (hi + 1 - lo) + lo);
 }
 	

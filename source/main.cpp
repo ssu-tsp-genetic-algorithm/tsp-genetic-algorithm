@@ -33,11 +33,12 @@ vector<Node> readDataFromCsv(string fileLocation)
                 std::stod(token);
             }
             newNode.id = i++;
+            newNode.areaId = 0;
             retCities.push_back(newNode);
         }
-
         inFile.close();
     }
+    else exit(-1);
     return retCities;
 }
 
@@ -62,47 +63,53 @@ int main()
 	srand((unsigned)time(NULL));
 	vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
 	vector<Chromosome> population;
+    Chromosome initialChromosome;
 
-	GeneticSearch* tspSolver = new GeneticSearch(cities);
-    TreeRouteFinder* subRouteFinder = new TreeRouteFinder(tspSolver->getCities());
+    TreeRouteFinder* subRouteFinder = new TreeRouteFinder(cities);
+	GeneticSearch* tspSolver = new GeneticSearch(subRouteFinder->getCities());
 
+
+    /*---------Tufu 영역 기반의 Branch&Bound 알고리즘 -------------*/
     population.push_back(Chromosome());
-    for(int areaId=0; areaId < subRouteFinder->getTotalAreaCount(); areaId++)
+    int areaId = tspSolver->getCities()[0].areaId; //시작 정점이 있는 영역부터 시작
+
+    for(int temp = 0; temp < subRouteFinder->getTotalAreaCount(); temp++)
     {
-        vector<Node> areaMinRoute;
-        const int startIdx = subRouteFinder->getAreaStartIndex(areaId);
+        vector<Node> areaMinRoute; //영역당 최소 경로가 들어갈 벡터
+        const int startIdx = subRouteFinder->getAreaStartIndex(areaId); //영역 내 시작 Idx
+
         subRouteFinder->findAreaMinimumRoute(areaId, startIdx, areaMinRoute, 0);
-        areaMinRoute = subRouteFinder->getMinRoute();
-        subRouteFinder->resetFindInfo();
+        areaMinRoute = subRouteFinder->getMinRoute(areaId);
 
-        population[0].gene.insert(population[0].gene.end(), areaMinRoute.begin(), areaMinRoute.end());
+        initialChromosome.gene.insert(initialChromosome.gene.end(), areaMinRoute.begin(), areaMinRoute.end());
+        areaId = (areaId + 1) % subRouteFinder->getTotalAreaCount();
     }
-    writeDataToCsv("../searchResult.csv", population[0]);
+    initialChromosome.gene.push_back(cities[0]);
 
-    /*
-	tspSolver->initPopulation(population);
+    /*---------위에서 구한 모집단을 기반으로 GA 수행------------------*/
+	tspSolver->initPopulation(population, initialChromosome);
+
 	tspSolver->fitness(population);
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
 	{
 		//부모 선택 & replace
 		tspSolver->selectParents(population);
 
-		//crossover, 상위 10개 idx와 랜덤한 idx
-		for(int cIdx=0; cIdx<10; cIdx++)
+		//crossover, 상위 15개 idx와 랜덤한 idx
+		for(int cIdx=0; cIdx<20; cIdx++)
 		{
 			int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
 			Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
 
             //25% 확률의 mutate 연산
-            if(tspSolver->getRandomIntVal(1, 100) >= 75)
-                tspSolver->mutate(newChild.gene);
+            if(tspSolver->getRandomIntVal(1, 100) >= 60)
+                tspSolver->mutate(population[cIdx].gene);
 			population.push_back(newChild);
 		}
 		cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
 	}
     writeDataToCsv("../searchResult.csv", population[0]);
 	system("pause");
-    */
 
 	delete tspSolver;
 }

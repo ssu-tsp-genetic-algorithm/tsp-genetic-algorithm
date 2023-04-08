@@ -28,6 +28,8 @@ public:
 
 	void initPopulation(vector<Chromosome>& population);
 
+    void initPopulation(vector<Chromosome>& population, const Chromosome& targetChromosome);
+
 	//population의 적합도를 평가하고 해당 값에 따라 오름차순으로 정렬
 	void fitness(vector<Chromosome>& population);
 
@@ -52,10 +54,13 @@ private:
 	const int populationSize = 30;
 	
 	//crossover 연산의 최대 범위 비율 (백분율)
-	const int maxCrossoverRate = 15;
-	
+	const int maxCrossoverRate = 20;
+
+    //crossover 연산의 최대 범위 비율 (백분율)
+    const int maxMutateRate = 10;
+
 	//최대 generation 수
-	const int genThres = 1000000;
+	const int genThres = 100000;
 
 private:
     //도시 좌표 정보
@@ -84,4 +89,6 @@ public:
     static double getDistance(const Node& a, const Node& b);
 
     vector<Node>& getCities() { return cities; }
+
+    void setCities(const vector<Node>& newCities) { cities = newCities; }
 };
