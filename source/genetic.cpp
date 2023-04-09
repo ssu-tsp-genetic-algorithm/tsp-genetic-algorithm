@@ -71,9 +71,9 @@ void GeneticSearch::selectParents(vector<Chromosome>& population)
 
 	sort(population.begin(), population.end(), compChromosome); 
 
-	//순위 기반 선택 -> 상위 20개 집단을 고름
-	if(population.size() >= 20)
-		population.erase(population.begin()+21, population.end());
+	//순위 기반 선택 -> 상위 30개 집단을 고름
+	if(population.size() >= populationSize)
+		population.erase(population.begin()+populationSize, population.end());
 }
 
 Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
@@ -143,7 +143,7 @@ bool GeneticSearch::mutate(vector<Node>& child)
 	if(t == 1e5) return false; //1e5번의 try -> failed
     if(rIdxB - rIdxA > maxMutateLength) rIdxB = min((int)cities.size()-2, rIdxA + maxMutateLength);
 
-    shuffle(child.begin()+rIdxA, child.begin()+rIdxB, std::default_random_engine());
+    reverse(child.begin()+rIdxA, child.begin()+rIdxB);
 	return true; //success
 }
 

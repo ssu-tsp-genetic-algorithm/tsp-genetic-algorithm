@@ -51,16 +51,16 @@ private:
 
 private:
 	//모집단 Size
-	const int populationSize = 30;
+	const int populationSize = 100;
 	
 	//crossover 연산의 최대 범위 비율 (백분율)
-	const int maxCrossoverRate = 20;
+	const int maxCrossoverRate = 50;
 
     //crossover 연산의 최대 범위 비율 (백분율)
-    const int maxMutateRate = 2;
+    const int maxMutateRate = 20;
 
 	//최대 generation 수
-	const int genThres = 1000000;
+	const int genThres = 500000;
 
 private:
     //도시 좌표 정보
@@ -81,6 +81,9 @@ public:
 
     //현재 Gen의 평균 Fitness
     double getCurrFitnessAvg(){ return currFitnessAvgValue; }
+
+    //모집단 개수 반환
+    int getPopulationSize() const { return populationSize; }
 
 	//random 라이브러리 내 기능을 이용해 범위 내의 난수 반환
 	int getRandomIntVal(int lo, int hi);

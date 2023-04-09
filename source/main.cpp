@@ -54,8 +54,8 @@ void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
         outFile << bestChromosome.gene[i-1].y <<", " << bestChromosome.gene[i-1].x<<", ";
         outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<endl;
     }
+    cout<<"write result on "<<filename<<"\n";
     outFile.close();
-    std::cout << "CSV file has been written: " << filename << std::endl;
 }
 
 int main()
@@ -101,14 +101,14 @@ int main()
 		//부모 선택 & replace
 		tspSolver->selectParents(population);
 
-		//crossover, 상위 15개 idx와 랜덤한 idx
-		for(int cIdx=0; cIdx<20; cIdx++)
+		//crossover, 상위 25개 idx와 랜덤한 idx
+		for(int cIdx=0; cIdx<tspSolver->getPopulationSize(); cIdx++)
 		{
 			int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
 			Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
 
             //25% 확률의 mutate 연산
-            if(tspSolver->getRandomIntVal(1, 100) >= 60)
+            if(tspSolver->getRandomIntVal(1, 100) >= 70)
                 tspSolver->mutate(population[cIdx].gene);
 			population.push_back(newChild);
 		}
