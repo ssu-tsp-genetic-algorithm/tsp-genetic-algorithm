@@ -73,8 +73,15 @@ int main()
     population.push_back(Chromosome());
     int areaId = tspSolver->getCities()[0].areaId; //시작 정점이 있는 영역부터 시작
 
-    for(int temp = 0; temp < subRouteFinder->getTotalAreaCount(); temp++)
+    const int tufuOrder[25] = {8, 3, 4, 9, 14
+                               , 13, 18, 19,24, 23
+                               , 22, 17, 16,21,20
+                               , 15, 10, 5, 0, 1
+                               , 2, 7, 6, 11, 12};
+
+    for(int idx = 0; idx< subRouteFinder->getTotalAreaCount(); idx++)
     {
+        const int areaId = tufuOrder[idx];
         vector<Node> areaMinRoute; //영역당 최소 경로가 들어갈 벡터
         const int startIdx = subRouteFinder->getAreaStartIndex(areaId); //영역 내 시작 Idx
 
@@ -82,11 +89,10 @@ int main()
         areaMinRoute = subRouteFinder->getMinRoute(areaId);
 
         initialChromosome.gene.insert(initialChromosome.gene.end(), areaMinRoute.begin(), areaMinRoute.end());
-        areaId = (areaId + 1) % subRouteFinder->getTotalAreaCount();
     }
     initialChromosome.gene.push_back(cities[0]);
 
-    /*---------위에서 구한 모집단을 기반으로 GA 수행------------------*/
+    //---------위에서 구한 모집단을 기반으로 GA 수행------------------
 	tspSolver->initPopulation(population, initialChromosome);
 
 	tspSolver->fitness(population);

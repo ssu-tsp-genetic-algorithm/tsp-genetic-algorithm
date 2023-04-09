@@ -57,10 +57,10 @@ private:
 	const int maxCrossoverRate = 20;
 
     //crossover 연산의 최대 범위 비율 (백분율)
-    const int maxMutateRate = 10;
+    const int maxMutateRate = 2;
 
 	//최대 generation 수
-	const int genThres = 100000;
+	const int genThres = 1000000;
 
 private:
     //도시 좌표 정보
