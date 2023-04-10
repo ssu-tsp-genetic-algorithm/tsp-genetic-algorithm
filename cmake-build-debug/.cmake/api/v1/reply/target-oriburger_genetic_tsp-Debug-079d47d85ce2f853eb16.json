@@ -45,7 +45,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g"
+					"fragment" : "-g -fdiagnostics-color=always"
 				},
 				{
 					"fragment" : "-std=gnu++14"
@@ -55,7 +55,7 @@
 			[
 				{
 					"backtrace" : 2,
-					"path" : "E:/Other Project/oriburger_genetic_tsp/source"
+					"path" : "D:/tsp-genetic-algorithm/source"
 				}
 			],
 			"language" : "CXX",

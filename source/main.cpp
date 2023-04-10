@@ -49,10 +49,11 @@ void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
     if (!outFile.is_open()) return;
 
     outFile << bestChromosome.fitnessVal<<", 0, 0, 0"<< endl;
-    for(int i=1; i<bestChromosome.gene.size(); i++)
+    const int geneLen = bestChromosome.gene.size();
+    for(int i=0; i <= geneLen; i++)
     {
-        outFile << bestChromosome.gene[i-1].y <<", " << bestChromosome.gene[i-1].x<<", ";
-        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<endl;
+        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<", ";
+        outFile << bestChromosome.gene[(i+1)%geneLen].y <<", " << bestChromosome.gene[(i+1)%geneLen].x<<endl;
     }
     cout<<"write result on "<<filename<<"\n";
     outFile.close();
