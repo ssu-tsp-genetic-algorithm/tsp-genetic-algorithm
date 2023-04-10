@@ -1,0 +1,4 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S "/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP" -B "/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/cmake-build-debug
