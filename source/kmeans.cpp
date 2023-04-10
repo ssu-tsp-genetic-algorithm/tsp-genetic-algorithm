@@ -66,16 +66,11 @@ void KmeansGeneticSearch::initPopulationWithKmeansRandom(vector<Chromosome> &pop
     //클러스터링 실행
     kmeansClustering(clusteredLabel, centers, cities, k);
 
-    //3개의 군집 생성
-    vector<Node> group[3];
+    //k개의 군집 생성
+    vector<Node> group[k];
     for(int i=1; i<cities.size(); i++)
     {
-        if(clusteredLabel.at<int>(i, 0) == 0)
-            group[0].push_back(cities[i]);
-        else if(clusteredLabel.at<int>(i, 0) == 1)
-            group[1].push_back(cities[i]);
-        else
-            group[2].push_back(cities[i]);
+        group[clusteredLabel.at<int>(i, 0)].push_back(cities[i]);
     }
 
     //군집 내 랜덤 생성
@@ -86,30 +81,15 @@ void KmeansGeneticSearch::initPopulationWithKmeansRandom(vector<Chromosome> &pop
     for(int i=0; i<populationSize; i++)
     {
         for(int j=0;j<3;j++)
-        {
             shuffle(group[j].begin(), group[j].end(), g);
-        }
 
+        //첫 노드의 클러스터에 따라 초기 gene 형성
         vector<Node> tmp = {cities[0]};
-
-        if(clusteredLabel.at<int>(0,0)==0)
-        {
-            tmp.insert(tmp.end(), group[0].begin(), group[0].end());
-            tmp.insert(tmp.end(), group[1].begin(),group[1].end());
-            tmp.insert(tmp.end(), group[2].begin(),group[2].end());
-        }
-        else if(clusteredLabel.at<int>(0,0)==1)
-        {
-            tmp.insert(tmp.end(), group[1].begin(), group[1].end());
-            tmp.insert(tmp.end(), group[2].begin(),group[2].end());
-            tmp.insert(tmp.end(), group[0].begin(),group[0].end());
-        }
-        else
-        {
-            tmp.insert(tmp.end(), group[2].begin(), group[2].end());
-            tmp.insert(tmp.end(), group[0].begin(),group[0].end());
-            tmp.insert(tmp.end(), group[1].begin(),group[1].end());
-        }
+        int firstClusterNum = clusteredLabel.at<int>(0,0);
+        for(int i=firstClusterNum;i<k;i++)
+            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
+        for(int i=0;i<firstClusterNum;i++)
+            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
 
         population.push_back({tmp, 0.0f});
     }
