@@ -69,8 +69,7 @@ int main()
     KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 3);
 
     //---------위에서 구한 모집단을 기반으로 GA 수행------------------
-//    tspSolver->initPopulation(population);
-    tspSolver->initPopulationWithKmeansRandom(population);
+    tspSolver->initPopulation(population);
     tspSolver->fitness(population);
     for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
     {
