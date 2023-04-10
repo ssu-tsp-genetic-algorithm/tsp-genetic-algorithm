@@ -68,7 +68,7 @@ void KmeansGeneticSearch::initPopulationWithKmeansRandom(vector<Chromosome> &pop
 
     //3개의 군집 생성
     vector<Node> group[3];
-    for(int i=1; i<cities.size()-1; i++)
+    for(int i=1; i<cities.size(); i++)
     {
         if(clusteredLabel.at<int>(i, 0) == 0)
             group[0].push_back(cities[i]);
@@ -111,7 +111,6 @@ void KmeansGeneticSearch::initPopulationWithKmeansRandom(vector<Chromosome> &pop
             tmp.insert(tmp.end(), group[1].begin(),group[1].end());
         }
 
-        tmp.push_back(cities[0]);
         population.push_back({tmp, 0.0f});
     }
 }

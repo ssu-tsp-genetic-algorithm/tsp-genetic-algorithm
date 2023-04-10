@@ -1,12 +1,13 @@
 #include <iostream>
 #include <algorithm>
+#include <utility>
 #include <ctime>
 #include <cstdlib>
-#include <ostream>
 #include <fstream>
 #include <sstream>
 #include "genetic.h"
 #include "kmeans.h"
+
 using namespace std;
 
 vector<Node> readDataFromCsv(string fileLocation)
@@ -48,49 +49,50 @@ void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
     if (!outFile.is_open()) return;
 
     outFile << bestChromosome.fitnessVal<<", 0, 0, 0"<< endl;
-    for(int i=1; i<bestChromosome.gene.size(); i++)
+    const int geneLen = bestChromosome.gene.size();
+    for(int i=0; i < geneLen; i++)
     {
-        outFile << bestChromosome.gene[i-1].y <<", " << bestChromosome.gene[i-1].x<<", ";
-        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<endl;
+        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<", ";
+        outFile << bestChromosome.gene[(i+1)%geneLen].y <<", " << bestChromosome.gene[(i+1)%geneLen].x<<endl;
     }
+    cout<<"write result on "<<filename<<"\n";
     outFile.close();
-    std::cout << "CSV file has been written: " << filename << std::endl;
 }
 
 int main()
 {
-	srand((unsigned)time(NULL));
-	vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
-	vector<Chromosome> population;
+    srand((unsigned)time(NULL));
+    vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
+    vector<Chromosome> population;
 
-//	GeneticSearch* tspSolver = new GeneticSearch(cities);
-	KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 3);
+//    GeneticSearch* tspSolver = new GeneticSearch(cities);
+    KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 3);
 
+    //---------위에서 구한 모집단을 기반으로 GA 수행------------------
 //    tspSolver->initPopulation(population);
-	tspSolver->initPopulationWithKmeansRandom(population);
-//	tspSolver->fitness(population);
+    tspSolver->initPopulationWithKmeansRandom(population);
+    tspSolver->fitness(population);
+    for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
+    {
+        //부모 선택 & replace
+        tspSolver->selectParents(population);
 
-
-	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
-	{
-		//부모 선택 & replace
-		tspSolver->selectParents(population);
-
-		//crossover, 상위 10개 idx와 랜덤한 idx
-		for(int cIdx=0; cIdx<10; cIdx++) 
-		{
-			int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
-			Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
+        //crossover, 상위 25개 idx와 랜덤한 idx
+        for(int cIdx=0; cIdx<tspSolver->getPopulationSize(); cIdx++)
+        {
+            int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
+            Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
 
             //25% 확률의 mutate 연산
-            if(tspSolver->getRandomIntVal(1, 100) >= 75)
-                tspSolver->mutate(newChild.gene);
-			population.push_back(newChild);
-		}
-		cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
-	}
-    writeDataToCsv("../searchResult.csv", population[0]);
-	system("pause");
+            if(tspSolver->getRandomIntVal(1, 100) >= 70)
+                tspSolver->mutate(population[cIdx].gene);
 
-	delete tspSolver;
+            population.push_back(newChild);
+        }
+        cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
+    }
+    writeDataToCsv("../searchResult.csv", population[0]);
+    system("pause");
+
+    delete tspSolver;
 }
