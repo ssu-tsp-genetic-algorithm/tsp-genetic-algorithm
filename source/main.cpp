@@ -66,10 +66,11 @@ int main()
     vector<Chromosome> population;
 
 //    GeneticSearch* tspSolver = new GeneticSearch(cities);
-    KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 3);
+    KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 30);
 
     //---------위에서 구한 모집단을 기반으로 GA 수행------------------
-    tspSolver->initPopulation(population);
+    tspSolver->initPopulationWithGreedy(population);
+//    tspSolver->initPopulation(population);
     tspSolver->fitness(population);
     for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
     {

@@ -23,5 +23,7 @@ public:
 
     //각 클러스터의 중심위치 반환.
     vector<Node> getCenters();
+
+    void initPopulationWithGreedy(vector<Chromosome> &population);
 };
 

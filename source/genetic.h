@@ -58,7 +58,7 @@ private:
     const int maxMutateRate = 20;
 
     //최대 generation 수
-    const int genThres = 5000;
+    const int genThres = 10000;
 
 private:
 
@@ -94,5 +94,5 @@ public:
 
     vector<Node>& getCities() { return cities; }
 
-    void setCities(const vector<Node>& newCities) { cities = newCities; }
+    void setCities(const vector<Node>& newCities) { cities = newCities; };
 };
