@@ -10,7 +10,6 @@ TreeRouteFinder::TreeRouteFinder(const vector<Node> &newCities)
 {
     citiesGroup.resize(getTotalAreaCount());
     cities = newCities;
-    cities.pop_back();
 
     adj.resize(cities.size()+1);
     visited = vector<bool>(cities.size(), false);

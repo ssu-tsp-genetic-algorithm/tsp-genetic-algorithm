@@ -117,12 +117,10 @@ bool GeneticSearch::mutate(vector<Node>& child)
 {
 	int rIdxA, rIdxB, t; //random index, try count
     const int maxMutateLength = cities.size() * maxMutateRate / 100;
-	for(t=0; t<1e5; t++) 
-	{
-		rIdxA = getRandomIntVal(1, child.size()-2);
-		rIdxB = getRandomIntVal(rIdxA, min((int)child.size()-1, rIdxA + maxMutateLength));
-	}
-	if(t == 1e5) return false; //1e5번의 try -> failed
+
+    rIdxA = getRandomIntVal(1, child.size()-2);
+    rIdxB = getRandomIntVal(rIdxA, min((int)child.size()-1, rIdxA + maxMutateLength));
+    if(rIdxA == rIdxB) return false;
 
     reverse(child.begin()+rIdxA, child.begin()+rIdxB);
 	return true; //success
