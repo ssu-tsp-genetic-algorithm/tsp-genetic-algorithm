@@ -50,7 +50,7 @@ void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
 
     outFile << bestChromosome.fitnessVal<<", 0, 0, 0"<< endl;
     const int geneLen = bestChromosome.gene.size();
-    for(int i=0; i <= geneLen; i++)
+    for(int i=0; i < geneLen; i++)
     {
         outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<", ";
         outFile << bestChromosome.gene[(i+1)%geneLen].y <<", " << bestChromosome.gene[(i+1)%geneLen].x<<endl;
