@@ -70,8 +70,8 @@ int main()
     KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 8);
 
     /*---------위에서 구한 모집단을 기반으로 GA 수행---------*/
-//    tspSolver->initPopulation(population);    //단순 Kmeans
-    tspSolver->initPopulationWithGreedy(population);    //Kmeans + Greedy
+    tspSolver->initPopulation(population);    //단순 Kmeans
+//    tspSolver->initPopulationWithGreedy(population);    //Kmeans + Greedy
 //    tspSolver->initPopulationWithConvexHull(population);    //Kmeans + Convex Hull
     tspSolver->fitness(population);
     for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)

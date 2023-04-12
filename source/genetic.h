@@ -62,7 +62,7 @@ private:
     const int maxMutateRate = 5;
 
     //최대 generation 수
-    const int genThres = 500000;
+    const int genThres = 100000;
 
 private:
 
@@ -76,7 +76,7 @@ protected:
 //도시 좌표 정보
 vector<Node> cities;
 //모집단 Size
-const int populationSize = 100;
+const int populationSize = 50;
 public:
     //generation 한계 (최대 gen)
     int getGenerationThres(){ return genThres; }

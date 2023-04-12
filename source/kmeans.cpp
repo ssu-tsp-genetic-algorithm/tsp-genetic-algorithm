@@ -75,39 +75,28 @@ void KmeansGeneticSearch::initPopulation(vector<Chromosome> &population)
     vector<Node> group[k];
     for(int i=1; i<cities.size(); i++)
     {
-        group[clusteredLabel.at<int>(i)].push_back(cities[i]);
+        group[clusteredLabel.at<int>(i, 0)].push_back(cities[i]);
     }
 
+    //군집 내 랜덤 생성
+    random_device rd;
+    mt19937 g(rd());
+
     population.clear();
-
-    std::random_device rd;
-    std::mt19937 g(rd());
-    vector<Node> tmp;
-
-    //첫 노드의 클러스터 번호
-    int firstClusterNum = clusteredLabel.at<int>(0,0);
-    //초기 gene을 구성할 클러스터의 순서
-    vector<int> clustersOrder(k);
-
-    // 클러스터의 순서 랜덤 배열
-    for(int i=0; i<=k; i++) clustersOrder[i] = i;
-    //첫 노드의 클러스터를 처음에 배치
-    swap(clustersOrder[0], clustersOrder[firstClusterNum]);
-
-    Chromosome initialChromosome;
-
     for(int i=0; i<populationSize; i++)
     {
-        //클러스터 내 랜덤
-        for(int c=0;c<k;c++)
-            shuffle(group[c].begin(), group[c].end(), g);
-        //클러스터 순서 랜덤
-        std::shuffle(clustersOrder.begin()+1, clustersOrder.end(),g);
-        //전체 경로 구성
-        for(int o=0;o<k;o++)
-            tmp.insert(tmp.end(), group[clustersOrder[o]].begin(), group[clustersOrder[o]].end());
-        initialChromosome.gene = tmp;
-        population.push_back(initialChromosome);
+        for(int j=0;j<3;j++)
+            shuffle(group[j].begin(), group[j].end(), g);
+
+        //첫 노드의 클러스터에 따라 초기 gene 형성
+        vector<Node> tmp = {cities[0]};
+        int firstClusterNum = clusteredLabel.at<int>(0,0);
+        for(int i=firstClusterNum;i<k;i++)
+            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
+        for(int i=0;i<firstClusterNum;i++)
+            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
+
+        population.push_back({tmp, 0.0f});
     }
 }
 
