@@ -269,6 +269,15 @@
 # define COMPILER_VERSION_PATCH DEC(__GHS_VERSION_NUMBER      % 10)
 # endif
 
+<<<<<<< HEAD:cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
+=======
+#elif defined(__TASKING__)
+# define COMPILER_ID "Tasking"
+  # define COMPILER_VERSION_MAJOR DEC(__VERSION__/1000)
+  # define COMPILER_VERSION_MINOR DEC(__VERSION__ % 100)
+# define COMPILER_VERSION_INTERNAL DEC(__VERSION__)
+
+>>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509:cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 #elif defined(__SCO_VERSION__)
 # define COMPILER_ID "SCO"
 
@@ -373,6 +382,7 @@
 #  define COMPILER_VERSION_TWEAK DEC(_MSC_BUILD)
 # endif
 
+<<<<<<< HEAD:cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 #elif defined(__VISUALDSPVERSION__) || defined(__ADSPBLACKFIN__) || defined(__ADSPTS__) || defined(__ADSP21000__)
 # define COMPILER_ID "ADSP"
 #if defined(__VISUALDSPVERSION__)
@@ -380,6 +390,16 @@
 # define COMPILER_VERSION_MAJOR HEX(__VISUALDSPVERSION__>>24)
 # define COMPILER_VERSION_MINOR HEX(__VISUALDSPVERSION__>>16 & 0xFF)
 # define COMPILER_VERSION_PATCH HEX(__VISUALDSPVERSION__>>8  & 0xFF)
+=======
+#elif defined(_ADI_COMPILER)
+# define COMPILER_ID "ADSP"
+#if defined(__VERSIONNUM__)
+  /* __VERSIONNUM__ = 0xVVRRPPTT */
+#  define COMPILER_VERSION_MAJOR DEC(__VERSIONNUM__ >> 24 & 0xFF)
+#  define COMPILER_VERSION_MINOR DEC(__VERSIONNUM__ >> 16 & 0xFF)
+#  define COMPILER_VERSION_PATCH DEC(__VERSIONNUM__ >> 8 & 0xFF)
+#  define COMPILER_VERSION_TWEAK DEC(__VERSIONNUM__ & 0xFF)
+>>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509:cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 #endif
 
 #elif defined(__IAR_SYSTEMS_ICC__) || defined(__IAR_SYSTEMS_ICC)
@@ -531,6 +551,12 @@ char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";
 #  define PLATFORM_ID "Integrity"
 # endif
 
+<<<<<<< HEAD:cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
+=======
+# elif defined(_ADI_COMPILER)
+#  define PLATFORM_ID "ADSP"
+
+>>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509:cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 #else /* unknown platform */
 # define PLATFORM_ID
 
@@ -659,6 +685,39 @@ char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";
 #  define ARCHITECTURE_ID ""
 # endif
 
+<<<<<<< HEAD:cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
+=======
+# elif defined(__ADSPSHARC__)
+#  define ARCHITECTURE_ID "SHARC"
+
+# elif defined(__ADSPBLACKFIN__)
+#  define ARCHITECTURE_ID "Blackfin"
+
+#elif defined(__TASKING__)
+
+# if defined(__CTC__) || defined(__CPTC__)
+#  define ARCHITECTURE_ID "TriCore"
+
+# elif defined(__CMCS__)
+#  define ARCHITECTURE_ID "MCS"
+
+# elif defined(__CARM__)
+#  define ARCHITECTURE_ID "ARM"
+
+# elif defined(__CARC__)
+#  define ARCHITECTURE_ID "ARC"
+
+# elif defined(__C51__)
+#  define ARCHITECTURE_ID "8051"
+
+# elif defined(__CPCP__)
+#  define ARCHITECTURE_ID "PCP"
+
+# else
+#  define ARCHITECTURE_ID ""
+# endif
+
+>>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509:cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 #else
 #  define ARCHITECTURE_ID
 #endif
@@ -794,6 +853,10 @@ int main(int argc, char* argv[])
   int require = 0;
   require += info_compiler[argc];
   require += info_platform[argc];
+<<<<<<< HEAD:cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
+=======
+  require += info_arch[argc];
+>>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509:cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 #ifdef COMPILER_VERSION_MAJOR
   require += info_version[argc];
 #endif

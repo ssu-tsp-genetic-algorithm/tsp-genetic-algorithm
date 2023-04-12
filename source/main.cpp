@@ -1,11 +1,11 @@
 #include <iostream>
 #include <algorithm>
-#include <utility>
-#include <cstring>
 #include <ctime>
 #include <cstdlib>
+#include <ostream>
 #include <fstream>
 #include <sstream>
+#include "treeRouteFinder.h"
 #include "genetic.h"
 using namespace std;
 
@@ -33,11 +33,12 @@ vector<Node> readDataFromCsv(string fileLocation)
                 std::stod(token);
             }
             newNode.id = i++;
+            newNode.areaId = 0;
             retCities.push_back(newNode);
         }
-
         inFile.close();
     }
+    else exit(-1);
     return retCities;
 }
 
@@ -48,10 +49,11 @@ void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
     if (!outFile.is_open()) return;
 
     outFile << bestChromosome.fitnessVal<<", 0, 0, 0"<< endl;
-    for(int i=1; i<bestChromosome.gene.size(); i++)
+    const int geneLen = bestChromosome.gene.size();
+    for(int i=0; i < geneLen; i++)
     {
-        outFile << bestChromosome.gene[i-1].y <<", " << bestChromosome.gene[i-1].x<<", ";
-        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<endl;
+        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<", ";
+        outFile << bestChromosome.gene[(i+1)%geneLen].y <<", " << bestChromosome.gene[(i+1)%geneLen].x<<endl;
     }
     cout<<"write result on "<<filename<<"\n";
     outFile.close();
@@ -63,32 +65,60 @@ int main()
 	vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
 	vector<Chromosome> population;
 
-	GeneticSearch* tspSolver = new GeneticSearch(cities);
+    Chromosome initialChromosome;
+
+    TreeRouteFinder* subRouteFinder = new TreeRouteFinder(cities);
+	GeneticSearch* tspSolver = new GeneticSearch(subRouteFinder->getCities());
+
+    //---------Tufu 영역 기반의 Convex-Hull 알고리즘 -------------
+    const int tufuOrder[25] = {8, 3, 4, 9, 14
+            , 13, 18, 19,24, 23
+            , 22, 17, 16,21,20
+            , 15, 10, 5, 0, 1
+            , 2, 7, 6, 11, 12};
+
+    for(int i=0; i<25; i++)
+    {
+        vector<Node> convexHull = subRouteFinder->createConvexHullRoute(tufuOrder[i]);
+
+        if(i==0) //시작 정점이라면?
+        {
+            const Node& stNode = cities[0];
+            int stIdx = find_if(convexHull.begin(), convexHull.end(), [stNode](Node& n){
+                return n.y == stNode.y && n.x == stNode.x; }) - convexHull.begin();
+            convexHull.insert(convexHull.end(), convexHull.begin(), convexHull.begin()+stIdx);
+            convexHull.erase(convexHull.begin(), convexHull.begin()+stIdx);
+        }
+
+        initialChromosome.gene.insert(initialChromosome.gene.end(), convexHull.begin(), convexHull.end());
+    }
 
     //---------위에서 구한 모집단을 기반으로 GA 수행------------------
-    tspSolver->initPopulation(population);
 
-    tspSolver->fitness(population);
-    for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
-    {
-        //부모 선택 & replace
-        tspSolver->selectParents(population);
+	tspSolver->initPopulation(population, initialChromosome);
 
-        //crossover, 상위 25개 idx와 랜덤한 idx
-        for(int cIdx=0; cIdx<tspSolver->getPopulationSize(); cIdx++)
-        {
-            int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
-            Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
+	tspSolver->fitness(population);
+
+	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
+	{
+		//부모 선택 & replace
+		tspSolver->selectParents(population);
+
+		//crossover
+		for(int cIdx=0; cIdx<tspSolver->getPopulationSize(); cIdx++)
+		{
+			int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
+			Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
 
             //25% 확률의 mutate 연산
-            if(tspSolver->getRandomIntVal(1, 100) >= 70)
+            if(tspSolver->getRandomIntVal(1, 100) >= 60)
                 tspSolver->mutate(population[cIdx].gene);
-            population.push_back(newChild);
-        }
-        cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
-    }
+			population.push_back(newChild);
+		}
+		cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
+	}
     writeDataToCsv("../searchResult.csv", population[0]);
-    system("pause");
+	system("pause");
 
-    delete tspSolver;
+	delete tspSolver;
 }

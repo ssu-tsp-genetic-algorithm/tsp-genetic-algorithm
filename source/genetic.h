@@ -1,19 +1,22 @@
+#pragma  once
 #include <vector>
 #include <random>
 #include <cstdlib>
+#include <unordered_map
 using namespace std;
 
 struct Node
 {
-	double y;
-	double x;
-	int id;
+    double y;
+    double x;
+    int id;
+    int areaId;
 } typedef Gene;
 
 struct Chromosome
 {
-	vector<Gene> gene;
-	double fitnessVal;
+    vector<Gene> gene;
+    double fitnessVal;
 };
 
 class GeneticSearch
@@ -23,7 +26,7 @@ public:
 
     GeneticSearch(const vector<Node>& newCities);
 
-    //단순히 랜덤한 모집단을 원한다면?
+    //초기에 설정할 염색체가 없다면? 랜덤 생성
     void initPopulation(vector<Chromosome>& population);
 
     //초기에 설정할 염색체가 있다면? (두부, 클러스터링 등)
@@ -38,8 +41,14 @@ public:
     //순서 crossover 연산
     Chromosome crossover(const Chromosome& p1, const Chromosome& p2);
 
-    //단순 swap을 통한 mutate 연산
+    //entrance 함수
     bool mutate(vector<Node>& child);
+
+    //단순 swap을 통한 mutate 연산
+    bool swapMutate(vector<Node>& child);
+
+    //reverse 연산을 통한 mutate 연산
+    bool inverseMutate(vector<Node>& child);
 
 private:
     //fitness 값을 비교하여 오름차순 조건을 반환
@@ -53,13 +62,14 @@ private:
     const int populationSize = 100;
 
     //crossover 연산의 최대 범위 비율 (백분율)
-    const int maxCrossoverRate = 50;
+
+    const int maxCrossoverRate = 65;
 
     //crossover 연산의 최대 범위 비율 (백분율)
-    const int maxMutateRate = 20;
+    const int maxMutateRate = 7;
 
     //최대 generation 수
-    const int genThres = 50000;
+    const int genThres = 100000;
 
 private:
     //도시 좌표 정보
