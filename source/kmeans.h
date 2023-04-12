@@ -25,5 +25,7 @@ public:
     vector<Node> getCenters();
 
     void initPopulationWithGreedy(vector<Chromosome> &population);
+
+    void dfs(int u, int length);
 };
 

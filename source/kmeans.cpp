@@ -2,11 +2,11 @@
 #include "kmeans.h"
 
 #include <algorithm>
+#include <stack>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <opencv2/opencv.hpp>
-#define MAX_BRANCH_COUNT 3
 
 using namespace std;
 
@@ -62,7 +62,6 @@ vector<Node> KmeansGeneticSearch::getCenters(){
         clusterCenters[i].y = centers.at<float>(i, 0);
         clusterCenters[i].x = centers.at<float>(i, 1);
     }
-    cout<<clusterCenters[0].x<<endl;
     return clusterCenters;
 }
 
@@ -121,13 +120,10 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
 {
     //[groupNum][idx] : groupNum 영역의 idx번째 도시 (node.id가 저장)
     vector<int> citiesGroup[k];
-    //[u][v] : t
+    //클러스터 내 인접행렬 [u][v] : t
     vector<vector<pair<double, int> > > adj;
-    //중복 체크
+    //클러스터 내 그리디 적용 시중복 체크
     vector<bool> visited(cities.size(), false);
-    //찾은 최소의 경로
-    vector<vector<Node>> minRoute;
-
 
     //클러스터링 실행
     kmeansClustering(clusteredLabel, centers, cities, k);
@@ -163,6 +159,7 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
 
     vector<Node> route[k];
 
+    //클러스터 별 그리디알고리즘 실행
     for(int i=0;i<k;i++){
         vector<int>& currGroup = citiesGroup[i];
         route[i].push_back(cities[citiesGroup[i][0]]);  //경로의 시작 지점을 그룹의 첫 노드로 설정.
@@ -196,19 +193,19 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
     //첫 노드의 클러스터 번호
     int firstClusterNum = clusteredLabel.at<int>(0,0);
     //초기 gene을 구성할 클러스터의 순서
-    vector<int> clustersOrder(k+1);
+    vector<int> clustersOrder(k);
 
     // 클러스터의 순서 랜덤 배열
     for(int i=0; i<=k; i++) clustersOrder[i] = i;
     swap(clustersOrder[0], clustersOrder[firstClusterNum]);
-    std::shuffle(clustersOrder.begin()+1, clustersOrder.end(),g);
 
     Chromosome initialChromosome;
 
     for(int i=0; i<populationSize; i++)
     {
+        std::shuffle(clustersOrder.begin()+1, clustersOrder.end(),g);
         for(int o=0;o<k;o++)
-            tmp.insert(tmp.end(), route[o].begin(), route[o].end());
+            tmp.insert(tmp.end(), route[clustersOrder[o]].begin(), route[clustersOrder[o]].end());
         initialChromosome.gene = tmp;
         population.push_back(initialChromosome);
     }

@@ -58,7 +58,7 @@ private:
     const int maxMutateRate = 5;
 
     //최대 generation 수
-    const int genThres = 1000;
+    const int genThres = 10000;
 
 private:
 
