@@ -64,13 +64,15 @@ int main()
     srand((unsigned)time(NULL));
     vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
     vector<Chromosome> population;
+    vector<double> fitnessPer100;
 
 //    GeneticSearch* tspSolver = new GeneticSearch(cities);
     KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 8);
 
-    //---------위에서 구한 모집단을 기반으로 GA 수행------------------
-    tspSolver->initPopulationWithGreedy(population);
-//    tspSolver->initPopulation(population);
+    /*---------위에서 구한 모집단을 기반으로 GA 수행---------*/
+//    tspSolver->initPopulation(population);    //단순 Kmeans
+    tspSolver->initPopulationWithGreedy(population);    //Kmeans + Greedy
+//    tspSolver->initPopulationWithConvexHull(population);    //Kmeans + Convex Hull
     tspSolver->fitness(population);
     for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
     {
@@ -90,13 +92,27 @@ int main()
             population.push_back(newChild);
         }
         cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
-        if(currGen % 50000 == 0)
+        if((currGen+1) % 50000 == 0)
         {
-            string filename = "../output/searchResult_" + to_string(currGen) + "_gen.csv";
+            string filename = "../output/searchResult_" + to_string(currGen+1) + "_gen.csv";
             writeDataToCsv(filename, population[0]);
+        }
+        if((currGen+1) % 100 ==0)
+        {
+            fitnessPer100.push_back(population[0].fitnessVal);
         }
     }
     writeDataToCsv("../searchResult.csv", population[0]);
+
+    ofstream outFile("../output/fitnessChange");
+
+    for(int i=0; i < fitnessPer100.size(); i++)
+    {
+        outFile << i*100 <<", " << fitnessPer100[i]<<endl;
+    }
+    cout<<"write result on /output/fitnessChange"<<"\n";
+    outFile.close();
+
     system("pause");
 
     delete tspSolver;

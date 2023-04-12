@@ -3,9 +3,6 @@
 
 #include <algorithm>
 #include <stack>
-#include <cstdlib>
-#include <iostream>
-#include <fstream>
 #include <opencv2/opencv.hpp>
 
 using namespace std;
@@ -66,23 +63,11 @@ vector<Node> KmeansGeneticSearch::getCenters(){
 }
 
 /**
- * Kmeans클러스터링 후 각 군집별 랜덤하게 구성 후 이어붙임
+ * 클러스터링 후 각 군집별 랜덤하게 초기 유전자 형성
  * @param population
- * @param cities
- * @param populationSize //최대 초기 부모 유전자 수
  */
 void KmeansGeneticSearch::initPopulation(vector<Chromosome> &population)
 {
-    //[groupNum][idx] : groupNum 영역의 idx번째 도시 (node.id가 저장)
-    vector<int> citiesGroup[k];
-    //[u][v] : t
-    vector<vector<pair<double, int> > > adj;
-    //중복 체크
-    vector<bool> visited(cities.size(), false);
-    //찾은 최소의 경로
-    vector<vector<Node>> minRoute;
-
-
     //클러스터링 실행
     kmeansClustering(clusteredLabel, centers, cities, k);
 
@@ -95,27 +80,41 @@ void KmeansGeneticSearch::initPopulation(vector<Chromosome> &population)
 
     population.clear();
 
-    //군집 내 랜덤 생성
-    random_device rd;
-    mt19937 g(rd());
+    std::random_device rd;
+    std::mt19937 g(rd());
+    vector<Node> tmp;
+
+    //첫 노드의 클러스터 번호
+    int firstClusterNum = clusteredLabel.at<int>(0,0);
+    //초기 gene을 구성할 클러스터의 순서
+    vector<int> clustersOrder(k);
+
+    // 클러스터의 순서 랜덤 배열
+    for(int i=0; i<=k; i++) clustersOrder[i] = i;
+    //첫 노드의 클러스터를 처음에 배치
+    swap(clustersOrder[0], clustersOrder[firstClusterNum]);
+
+    Chromosome initialChromosome;
 
     for(int i=0; i<populationSize; i++)
     {
-        for(int j=0;j<3;j++)
-            shuffle(group[j].begin(), group[j].end(), g);
-
-        //첫 노드의 클러스터에 따라 초기 gene 형성
-        vector<Node> tmp = {cities[0]};
-        int firstClusterNum = clusteredLabel.at<int>(0,0);
-        for(int i=firstClusterNum;i<k;i++)
-            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
-        for(int i=0;i<firstClusterNum;i++)
-            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
-
-        population.push_back({tmp, 0.0f});
+        //클러스터 내 랜덤
+        for(int c=0;c<k;c++)
+            shuffle(group[c].begin(), group[c].end(), g);
+        //클러스터 순서 랜덤
+        std::shuffle(clustersOrder.begin()+1, clustersOrder.end(),g);
+        //전체 경로 구성
+        for(int o=0;o<k;o++)
+            tmp.insert(tmp.end(), group[clustersOrder[o]].begin(), group[clustersOrder[o]].end());
+        initialChromosome.gene = tmp;
+        population.push_back(initialChromosome);
     }
 }
 
+/**
+ * 클러스터링 후 각 군집별 그리디 알고리즘을 통해 초기 유전자 형성
+ * @param population
+ */
 void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &population)
 {
     //[groupNum][idx] : groupNum 영역의 idx번째 도시 (node.id가 저장)
@@ -137,7 +136,7 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
     }
 
     adj.resize(cities.size()+1);
-    //인접행렬 생성.
+    //클러스터 내 인접행렬 생성.
     for(int groupNum=0; groupNum<k; groupNum++)
     {
         vector<int>& currArea = citiesGroup[groupNum];
@@ -209,4 +208,169 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
         initialChromosome.gene = tmp;
         population.push_back(initialChromosome);
     }
+}
+
+/**
+ * 클러스터링 후 각 군집별 Convex Hull 알고리즘을 통해 초기 유전자 형성
+ * @param population
+ */
+void KmeansGeneticSearch::initPopulationWithConvexHull(vector<Chromosome>& population)
+{
+    //[groupNum][idx] : groupNum 영역의 idx번째 도시 (node.id가 저장)
+    vector<vector<NodeCH>> citiesGroup(k);
+    //클러스터 내 인접행렬 [u][v] : t
+    vector<vector<pair<double, int> > > adj;
+    //중복 체크
+    vector<bool> visited(cities.size(), false);
+    Chromosome initialChromosome;
+
+    //클러스터링 실행
+    kmeansClustering(clusteredLabel, centers, cities, k);
+
+    //k개의 군집 생성
+    vector<Node> group[k];
+    for(int i=0; i<cities.size(); i++)
+    {
+        int groupNum = clusteredLabel.at<int>(i, 0);
+        citiesGroup[groupNum].push_back({cities[i], 0, 0});
+    }
+
+    adj.resize(cities.size()+1);
+
+    //Convex Hull 알고리즘 실행
+    for(int i=0; i<k; i++)
+    {
+        vector<Node> convexHull = createConvexHullRoute(i, citiesGroup);
+
+        if(i==0) //시작 정점인 경우
+        {
+            const Node& stNode = cities[0];
+            int stIdx = find_if(convexHull.begin(), convexHull.end(), [stNode](Node& n){
+                return n.y == stNode.y && n.x == stNode.x; }) - convexHull.begin();
+            convexHull.insert(convexHull.end(), convexHull.begin(), convexHull.begin()+stIdx);
+            convexHull.erase(convexHull.begin(), convexHull.begin()+stIdx);
+        }
+
+        initialChromosome.gene.insert(initialChromosome.gene.end(), convexHull.begin(), convexHull.end());
+    }
+
+    population.clear();
+    for(int i=0; i<populationSize; i++)
+        population.push_back(initialChromosome);
+}
+
+/**
+ * 클러스터 별 Convex Hull 알고리즘 실행
+ * @param groupId
+ * @param citiesGroup
+ * @return vector<Node> Convex Hull 알고리즘 실행 결과
+ */
+vector<Node> KmeansGeneticSearch::createConvexHullRoute(int groupId, vector<vector<NodeCH>> & citiesGroup)
+{
+    vector<NodeCH>& currArea = citiesGroup[groupId];
+    vector<bool> visited(currArea.size(), false);
+
+    sort(currArea.begin(), currArea.end(), compNode);
+    for(int i=1; i<currArea.size(); i++) //u - v 모든 쌍을 시도
+    {
+        currArea[i].p = currArea[i].node.y - currArea[0].node.y;
+        currArea[i].q = currArea[i].node.x - currArea[0].node.x;
+    }
+
+    NodeCH st = currArea[0];
+    sort(currArea.begin()+1, currArea.end(), [&st](const NodeCH& a, const NodeCH& b) {
+        int ccwVal = getCCwValue(st.node, a.node, b.node);
+        if(ccwVal == 0) return GeneticSearch::getDistance(st.node, a.node) < GeneticSearch::getDistance(st.node, b.node);
+        return ccwVal > 0;
+    });
+
+    stack<int> stk;
+    stk.push(0);
+    stk.push(1);
+
+    for(int next = 2; next < currArea.size(); next++)
+    {
+        while(stk.size() >= 2)
+        {
+            int first, second;
+            first = stk.top(); stk.pop();
+            second = stk.top();
+
+            if(getCCwValue(currArea[second].node, currArea[first].node, currArea[next].node) > 0)
+            {
+                stk.push(first);
+                break;
+            }
+        }
+        stk.push(next);
+    }
+
+    vector<Node> ret;
+    while(!stk.empty())
+    {
+        ret.push_back(citiesGroup[groupId][stk.top()].node);
+        visited[stk.top()] = true;
+        stk.pop();
+    }
+
+    for(int i=0; i<currArea.size(); i++)
+    {
+        if(visited[i]) continue;
+        Node& targetNode = currArea[i].node;
+
+        double minLength = 1e6f;
+        vector<int> insertPosCandidate;
+        for(int j=0; j<ret.size(); j++)
+        {
+            const Node& p = ret[j];
+            const Node& q = ret[(j+1) % ret.size()];
+
+            double dist = GeneticSearch::getDistance(targetNode, p)
+                          + GeneticSearch::getDistance(targetNode, q)
+                          - GeneticSearch::getDistance(p, q);
+
+            if(dist <= minLength)
+            {
+                if(dist == minLength) insertPosCandidate.push_back(j);
+                else insertPosCandidate = {j};
+                minLength = dist;
+            }
+        }
+
+        minLength = 1e6f;
+        int insertPos = -1;
+
+        for(auto &candidate : insertPosCandidate)
+        {
+            const Node& p = ret[candidate];
+            const Node& q = ret[(candidate+1) % ret.size()];
+
+            double dist = (GeneticSearch::getDistance(p, targetNode)
+                           + GeneticSearch::getDistance(targetNode, q))
+                          / GeneticSearch::getDistance(p, q);
+
+            if(dist < minLength)
+            {
+                dist = minLength;
+                insertPos = candidate;
+            }
+        }
+
+        if(insertPos != -1)
+            ret.insert(ret.begin() + insertPos, targetNode);
+    }
+
+    return ret;
+}
+
+bool KmeansGeneticSearch::compNode(const NodeCH &a, const NodeCH &b)
+{
+    if(a.node.y != b.node.y) return a.node.y < b.node.y;
+    return a.node.x < b.node.x;
+}
+
+int KmeansGeneticSearch::getCCwValue(const Node& a, const Node& b, const Node& c)
+{
+    double result = (b.x-a.x)*(c.y-a.y) - (b.y-a.y)*(c.x-a.x);
+    return result == 0 ? 0 : (result > 0 ? 1 : -1);
 }

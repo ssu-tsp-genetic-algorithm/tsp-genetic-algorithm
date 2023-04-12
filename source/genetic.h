@@ -42,6 +42,10 @@ public:
     //단순 swap을 통한 mutate 연산
     bool mutate(vector<Node>& child);
 
+    bool swapMutate(vector<Node> &child);
+
+    bool inverseMutate(vector<Node>& child);
+
 private:
     //fitness 값을 비교하여 오름차순 조건을 반환
     static bool compChromosome(const Chromosome& c1, const Chromosome& c2);
@@ -58,7 +62,7 @@ private:
     const int maxMutateRate = 5;
 
     //최대 generation 수
-    const int genThres = 10000;
+    const int genThres = 500000;
 
 private:
 

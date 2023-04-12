@@ -112,15 +112,32 @@ Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
     return newChild;
 }
 
-bool GeneticSearch::mutate(vector<Node>& child)
+bool GeneticSearch::mutate(vector<Node> &child)
 {
-    int rIdxA, rIdxB; //random index
+    if(getRandomIntVal(1, 100) < 90) return inverseMutate(child);
+    else return swapMutate(child);
+}
+
+bool GeneticSearch::swapMutate(vector<Node> &child)
+{
+    int rIdxA, rIdxB, t; //random index, try count
     const int maxMutateLength = cities.size() * maxMutateRate / 100;
+
     rIdxA = getRandomIntVal(1, child.size()-2);
     rIdxB = getRandomIntVal(rIdxA, min((int)child.size()-1, rIdxA + maxMutateLength));
+    swap(child[rIdxA], child[rIdxB]);
 
-    if(rIdxA==rIdxB)return false;
+    return true;
+}
 
+bool GeneticSearch::inverseMutate(vector<Node>& child)
+{
+    int rIdxA, rIdxB, t; //random index, try count
+    const int maxMutateLength = cities.size() * maxMutateRate / 100;
+
+    rIdxA = getRandomIntVal(1, child.size()-2);
+    rIdxB = getRandomIntVal(rIdxA, min((int)child.size()-1, rIdxA + maxMutateLength));
+    if(rIdxA == rIdxB) return false;
     reverse(child.begin()+rIdxA, child.begin()+rIdxB);
     return true; //success
 }
