@@ -66,7 +66,7 @@ int main()
     vector<Chromosome> population;
 
 //    GeneticSearch* tspSolver = new GeneticSearch(cities);
-    KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 30);
+    KmeansGeneticSearch* tspSolver = new KmeansGeneticSearch(cities, 8);
 
     //---------위에서 구한 모집단을 기반으로 GA 수행------------------
     tspSolver->initPopulationWithGreedy(population);
@@ -77,19 +77,24 @@ int main()
         //부모 선택 & replace
         tspSolver->selectParents(population);
 
-        //crossover, 상위 25개 idx와 랜덤한 idx
+        //crossover
         for(int cIdx=0; cIdx<tspSolver->getPopulationSize(); cIdx++)
         {
             int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
             Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
 
-            //25% 확률의 mutate 연산
-            if(tspSolver->getRandomIntVal(1, 100) >= 70)
+            //40% 확률의 mutate 연산
+            if(tspSolver->getRandomIntVal(1, 100) <= 40)
                 tspSolver->mutate(population[cIdx].gene);
 
             population.push_back(newChild);
         }
         cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
+        if(currGen % 50000 == 0)
+        {
+            string filename = "../output/searchResult_" + to_string(currGen) + "_gen.csv";
+            writeDataToCsv(filename, population[0]);
+        }
     }
     writeDataToCsv("../searchResult.csv", population[0]);
     system("pause");

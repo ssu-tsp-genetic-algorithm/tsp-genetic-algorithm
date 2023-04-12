@@ -52,13 +52,13 @@ private:
 private:
 
     //crossover 연산의 최대 범위 비율 (백분율)
-    const int maxCrossoverRate = 50;
+    const int maxCrossoverRate = 65;
 
     //Mutate 연산의 최대 범위 비율 (백분율)
-    const int maxMutateRate = 20;
+    const int maxMutateRate = 5;
 
     //최대 generation 수
-    const int genThres = 10000;
+    const int genThres = 1000;
 
 private:
 
@@ -72,7 +72,7 @@ protected:
 //도시 좌표 정보
 vector<Node> cities;
 //모집단 Size
-const int populationSize = 50;
+const int populationSize = 100;
 public:
     //generation 한계 (최대 gen)
     int getGenerationThres(){ return genThres; }

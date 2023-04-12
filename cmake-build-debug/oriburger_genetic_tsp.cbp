@@ -27,7 +27,7 @@
 					<Add directory="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source"/>
 					<Add directory="/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
@@ -49,7 +49,7 @@
 					<Add directory="/Users/junseo/Documents/Univ/2023-1/인공지능/2. 프로젝트/project1TSP/source"/>
 					<Add directory="/opt/homebrew/Cellar/opencv/4.7.0_2/include/opencv4"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>

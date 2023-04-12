@@ -189,17 +189,27 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
         }
     }
 
+    std::random_device rd;
+    std::mt19937 g(rd());
     vector<Node> tmp;
-    int firstClusterNum = clusteredLabel.at<int>(0,0);
-    for(int i=firstClusterNum;i<k;i++)
-        tmp.insert(tmp.end(), route[i].begin(), route[i].end());
-    for(int i=0;i<firstClusterNum;i++)
-        tmp.insert(tmp.end(), route[i].begin(), route[i].end());
 
+    //첫 노드의 클러스터 번호
+    int firstClusterNum = clusteredLabel.at<int>(0,0);
+    //초기 gene을 구성할 클러스터의 순서
+    vector<int> clustersOrder(k+1);
+
+    // 클러스터의 순서 랜덤 배열
+    for(int i=0; i<=k; i++) clustersOrder[i] = i;
+    swap(clustersOrder[0], clustersOrder[firstClusterNum]);
+    std::shuffle(clustersOrder.begin()+1, clustersOrder.end(),g);
 
     Chromosome initialChromosome;
-    initialChromosome.gene = tmp;
 
     for(int i=0; i<populationSize; i++)
+    {
+        for(int o=0;o<k;o++)
+            tmp.insert(tmp.end(), route[o].begin(), route[o].end());
+        initialChromosome.gene = tmp;
         population.push_back(initialChromosome);
+    }
 }
