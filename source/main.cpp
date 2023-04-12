@@ -49,13 +49,14 @@ void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
     if (!outFile.is_open()) return;
 
     outFile << bestChromosome.fitnessVal<<", 0, 0, 0"<< endl;
-    for(int i=1; i<bestChromosome.gene.size(); i++)
+    const int geneLen = bestChromosome.gene.size();
+    for(int i=0; i < geneLen; i++)
     {
-        outFile << bestChromosome.gene[i-1].y <<", " << bestChromosome.gene[i-1].x<<", ";
-        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<endl;
+        outFile << bestChromosome.gene[i].y <<", " << bestChromosome.gene[i].x<<", ";
+        outFile << bestChromosome.gene[(i+1)%geneLen].y <<", " << bestChromosome.gene[(i+1)%geneLen].x<<endl;
     }
+    cout<<"write result on "<<filename<<"\n";
     outFile.close();
-    std::cout << "CSV file has been written: " << filename << std::endl;
 }
 
 int main()
@@ -68,41 +69,42 @@ int main()
     TreeRouteFinder* subRouteFinder = new TreeRouteFinder(cities);
 	GeneticSearch* tspSolver = new GeneticSearch(subRouteFinder->getCities());
 
-
-    /*---------Tufu 영역 기반의 Branch&Bound 알고리즘 -------------*/
-    population.push_back(Chromosome());
-    int areaId = tspSolver->getCities()[0].areaId; //시작 정점이 있는 영역부터 시작
-
+    //---------Tufu 영역 기반의 Convex-Hull 알고리즘 -------------
     const int tufuOrder[25] = {8, 3, 4, 9, 14
-                               , 13, 18, 19,24, 23
-                               , 22, 17, 16,21,20
-                               , 15, 10, 5, 0, 1
-                               , 2, 7, 6, 11, 12};
+            , 13, 18, 19,24, 23
+            , 22, 17, 16,21,20
+            , 15, 10, 5, 0, 1
+            , 2, 7, 6, 11, 12};
 
-    for(int idx = 0; idx< subRouteFinder->getTotalAreaCount(); idx++)
+    for(int i=0; i<25; i++)
     {
-        const int areaId = tufuOrder[idx];
-        vector<Node> areaMinRoute; //영역당 최소 경로가 들어갈 벡터
-        const int startIdx = subRouteFinder->getAreaStartIndex(areaId); //영역 내 시작 Idx
+        vector<Node> convexHull = subRouteFinder->createConvexHullRoute(tufuOrder[i]);
 
-        subRouteFinder->findAreaMinimumRoute(areaId, startIdx, areaMinRoute, 0);
-        areaMinRoute = subRouteFinder->getMinRoute(areaId);
+        if(i==0) //시작 정점이라면?
+        {
+            const Node& stNode = cities[0];
+            int stIdx = find_if(convexHull.begin(), convexHull.end(), [stNode](Node& n){
+                return n.y == stNode.y && n.x == stNode.x; }) - convexHull.begin();
+            convexHull.insert(convexHull.end(), convexHull.begin(), convexHull.begin()+stIdx);
+            convexHull.erase(convexHull.begin(), convexHull.begin()+stIdx);
+        }
 
-        initialChromosome.gene.insert(initialChromosome.gene.end(), areaMinRoute.begin(), areaMinRoute.end());
+        initialChromosome.gene.insert(initialChromosome.gene.end(), convexHull.begin(), convexHull.end());
     }
-    initialChromosome.gene.push_back(cities[0]);
 
     //---------위에서 구한 모집단을 기반으로 GA 수행------------------
+
 	tspSolver->initPopulation(population, initialChromosome);
 
 	tspSolver->fitness(population);
+
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
 	{
 		//부모 선택 & replace
 		tspSolver->selectParents(population);
 
-		//crossover, 상위 15개 idx와 랜덤한 idx
-		for(int cIdx=0; cIdx<20; cIdx++)
+		//crossover
+		for(int cIdx=0; cIdx<tspSolver->getPopulationSize(); cIdx++)
 		{
 			int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
 			Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);

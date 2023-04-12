@@ -3,6 +3,14 @@
 #define INF 10000000
 using namespace std;
 
+//Convex Hull을 위한 Node
+struct NodeCH
+{
+    Node node;
+    int p;
+    int q;
+};
+
 class TreeRouteFinder
 {
 public:
@@ -13,11 +21,7 @@ public:
     //areaId의 오름차순 정렬 조건 반환
     static bool compAreaId(const Node& a, const Node& b);
 
-    //영역에 대한 인접 리스트를 초기화
-    void initAreaAdjList();
-
-    //Pruning이 적용된 트리 서치 기법으로 각 영역의 최소에 가까운 경로를 탐색
-    void findAreaMinimumRoute(const int areaId, int curr, vector<Node> currState, double currCost);
+    vector<Node> createConvexHullRoute(const int& areaId);
 
     //해당 영역의 id를 반환
     inline int getAreaId(const Node& a) const;
@@ -29,12 +33,17 @@ private:
     //좌표 제한 (건들지마시오)
     const double coordThres = 100.0;
 
+    static inline int getCCwValue(const Node& a, const Node& b, const Node& c);
+
+    static inline bool compNode(const NodeCH& a, const NodeCH& b);
+
+
 private:
     //도시 좌표 정보
     vector<Node> cities;
 
     //[id][idx] : id 영역의 idx번째 도시 (node.id가 저장)
-    vector<vector<int> > citiesGroup;
+    vector<vector<NodeCH> > citiesGroup;
 
     //[u][v] : t
     vector<vector<pair<int, int> > > adj;
@@ -51,9 +60,6 @@ private:
 public:
     //총 AreaCount
     int getTotalAreaCount() const { return areaSideCount * areaSideCount; }
-
-    //각 영역의 시작 정점 id
-    int getAreaStartIndex(int areaId) { return citiesGroup[areaId][0]; }
 
     //해당 영역의 최소 route 반환
     vector<Node> getMinRoute(int areaId) { return minRoute[areaId]; }
