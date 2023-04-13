@@ -1,134 +1,206 @@
 #include "genetic.h"
 #include <algorithm>
 #include <ctime>
+#include <iostream>
 #include <cstdlib>
 
 GeneticSearch::GeneticSearch() {}
 
 GeneticSearch::GeneticSearch(const vector<Node>& newCities)
 {
-	cities = newCities;
-    cities.push_back(cities[0]); //돌아오도록
-
-	int idx = 0; //도시 id 초기화
-	for(auto &node : cities)
-		node.id = idx++;
+    cities = newCities;
 }
 
 void GeneticSearch::initPopulation(vector<Chromosome>& population)
 {
-	if(cities.size()==0) return; 
-	random_device rd;
+    random_device rd;
     mt19937 g(rd());
 
-	population.clear();
-	for(int i=0; i<populationSize; i++)
+    population.clear();
+    for(int i=0; i<populationSize; i++)
     {
         vector<Node> temp = cities;
-        shuffle(temp.begin()+1, temp.end()-1, g);
+        shuffle(temp.begin()+1, temp.end(), g);
         population.push_back({temp, 0.0f});
     }
 }
 
+void GeneticSearch::initPopulation(vector<Chromosome>& population, const Chromosome& targetChromosome)
+{
+    if(targetChromosome.gene.size()==0) return;
+
+    population.clear();
+    for(int i=0; i<populationSize; i++)
+        population.push_back(targetChromosome);
+}
+
 void GeneticSearch::fitness(vector<Chromosome>& population)
 {
-	//모집단의 염색체 하나씩을 돌면서 fitness 계산
-	for(auto &ch : population)
-	{
-		vector<Node> child = ch.gene;
-		double fitnessSum = 0.0f;
+    //모집단의 염색체 하나씩을 돌면서 fitness 계산
+    for(auto &ch : population)
+    {
+        vector<Node> child = ch.gene;
+        double fitnessSum = 0.0f;
 
-		Node prev = child[0];
-		fitnessSum += getDistance({0.0, 0.0}, prev); //원점 ~ child[0] 거리도 포함
-		for(int idx = 1; idx < child.size(); idx++) //총 경로 cost 게산
-		{
-			fitnessSum += getDistance(prev, child[idx]);
-			prev = child[idx];
-		}
-		ch.fitnessVal = fitnessSum;
+        Node prev = child[0];
+        for(int idx = 0; idx < child.size(); idx++) //총 경로 cost 게산
+        {
+            fitnessSum += getDistance(child[idx], child[(idx+1) % child.size()]);
+        }
+        ch.fitnessVal = fitnessSum;
         currFitnessAvgValue += fitnessSum;
-		minFitnessValue = min(minFitnessValue, ch.fitnessVal);
-	}
+
+        if(minFitnessValue > ch.fitnessVal)
+        {
+            minFitnessValue = ch.fitnessVal;
+            minChromosome = ch;
+        }
+    }
     currFitnessAvgValue /= population.size();
 }
 
 void GeneticSearch::selectParents(vector<Chromosome>& population)
 {
-	//fitness에 따라 오름차순 정렬
-	fitness(population);
+    //fitness에 따라 오름차순 정렬
+    fitness(population);
 
-	sort(population.begin(), population.end(), compChromosome); 
+    sort(population.begin(), population.end(), compChromosome);
 
-	//순위 기반 선택 -> 상위 20개 집단을 고름
-	if(population.size() >= 20)
-		population.erase(population.begin()+21, population.end());
+    //순위 기반 선택 -> populationSize 만큼의 상위 집단을 고름
+    static const int randParentCnt = 3;
+    if(population.size() >= populationSize + randParentCnt)
+        population.erase(population.begin()+populationSize + randParentCnt, population.end());
+
+    for(int i=0; i<randParentCnt; i++)
+    {
+        int eraseIdx = getRandomIntVal(0, population.size()-randParentCnt);
+        population.erase(population.begin() + eraseIdx);
+    }
 }
 
 Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)
 {
-	//cout<<"crossover #1\n";
+    //cout<<"crossover #1\n";
 
-	//-----idx 2개 랜덤 pick-------------
-	int loIdx=0, hiIdx=0;
-	const int maxCrossoverLength = cities.size() * maxCrossoverRate / 100;
-	while(loIdx == hiIdx)
-	{
-		loIdx = getRandomIntVal(0, cities.size() - 2);
-		hiIdx = getRandomIntVal(loIdx+1, loIdx + maxCrossoverLength);
-        hiIdx %= (cities.size()-1);
+    //-----idx 2개 랜덤 pick-------------
+    int loIdx=0, hiIdx=0;
+    const int maxCrossoverLength = cities.size() * maxCrossoverRate / 100;
+    while(loIdx == hiIdx)
+    {
+        loIdx = getRandomIntVal(0, cities.size() - 2);
+        hiIdx = getRandomIntVal(loIdx + 1, min((int)cities.size()-1, loIdx + maxCrossoverLength));
+    }
 
-        if(loIdx > hiIdx) swap(loIdx, hiIdx);
-        if(hiIdx - loIdx > maxCrossoverLength) hiIdx = loIdx + maxCrossoverLength;
-        hiIdx = (hiIdx == cities.size()-1 ?  hiIdx - 1 : hiIdx); //돌아가는 부분은 제외
-	}
-	
-	//cout<<"crossover #2\n";
-	//-----본격 crossover --------------
-	vector<bool> visited(cities.size() + 10, false); //중복 체크
-	Chromosome newChild; 
-	newChild.gene = vector<Gene>(cities.size());
+    //cout<<"crossover #2\n";
+    //-----본격 crossover --------------
+    vector<bool> visited(cities.size() + 10, false); //중복 체크
+    Chromosome newChild;
+    newChild.gene = vector<Gene>(cities.size());
 
-	//교차 영역을 지정
-	for(int cIdx = loIdx; cIdx <= hiIdx; cIdx++)
-	{
-		newChild.gene[cIdx] = p1.gene[cIdx];
-		visited[p1.gene[cIdx].id] = true; //중복 체크
-	}
+    //교차 영역을 지정
+    for(int cIdx = loIdx; cIdx <= hiIdx; cIdx++)
+    {
+        newChild.gene[cIdx] = p1.gene[cIdx];
+        visited[p1.gene[cIdx].id] = true; //중복 체크
+    }
 
-	//cout<<"crossover #3\n";
-	//p2에서 나머지를 땡겨옴
-	int idx = (loIdx == 0 ? hiIdx + 1 : 0);
-	for(auto &gene : p2.gene)
-	{
+    //cout<<"crossover #3\n";
+    //p2에서 나머지를 땡겨옴
+    int idx = 0;
+
+    for(int i=0; i < p2.gene.size(); i++)
+    {
+        auto& gene = p2.gene[i];
         int target = gene.id;
-		if(visited[target]) continue;
-		while(newChild.gene[idx].id != 0) idx = (hiIdx + 1) % cities.size(); //교차 영역은 건너뜀
+        if(visited[target] && idx) continue;
+        if(newChild.gene[idx].id != 0) idx = (hiIdx + 1) % cities.size(); //교차 영역은 건너뜀
 
-		newChild.gene[idx] = gene;
-		visited[gene.id] = true;
-		
-		idx = (idx + 1) % cities.size(); //circular idx
-	}
-	return newChild;
+        newChild.gene[idx] = gene;
+        visited[gene.id] = true;
+        idx = idx + 1;
+    }
+    return newChild;
 }
 
-bool GeneticSearch::mutate(vector<Node>& child)
+bool GeneticSearch::mutate(vector<Node> &child)
 {
-	int rIdxA, rIdxB, t; //random index, try count
-	for(t=0; t<1e5; t++) 
-	{
-		rIdxA = getRandomIntVal(1, child.size()-2);
-		rIdxB = getRandomIntVal(1, child.size()-2);
-		if(rIdxA != rIdxB) break;
-	}
-	if(t == 1e5) return false; //1e5번의 try -> failed
-	swap(child[rIdxA], child[rIdxB]);
-	return true; //success
+    if(getRandomIntVal(1, 100) < 90) return inverseMutate(child);
+    else return swapMutate(child);
+}
+
+bool GeneticSearch::swapMutate(vector<Node> &child)
+{
+    int rIdxA, rIdxB, t; //random index, try count
+    const int maxMutateLength = cities.size() * maxMutateRate / 100;
+
+    rIdxA = getRandomIntVal(1, child.size()-2);
+    rIdxB = getRandomIntVal(rIdxA, min((int)child.size()-1, rIdxA + maxMutateLength));
+    swap(child[rIdxA], child[rIdxB]);
+
+    return true;
+}
+
+bool GeneticSearch::inverseMutate(vector<Node>& child)
+{
+    int rIdxA, rIdxB, t; //random index, try count
+    const int maxMutateLength = cities.size() * maxMutateRate / 100;
+
+    rIdxA = getRandomIntVal(1, child.size()-2);
+    rIdxB = getRandomIntVal(rIdxA, min((int)child.size()-1, rIdxA + maxMutateLength));
+    if(rIdxA == rIdxB) return false;
+    reverse(child.begin()+rIdxA, child.begin()+rIdxB);
+    return true; //success
+}
+
+void GeneticSearch::repair(Chromosome &chromosome)
+{
+    std::vector<Node>& nodes = chromosome.gene;
+    std::vector<bool> visited(nodes.size(), false);
+
+    // 모든 도시를 방문하도록 경로 수정
+    for (int i = 0; i < nodes.size(); ++i) {
+        int idx = -1;
+        double min_dist = std::numeric_limits<double>::max();
+        for (int j = 0; j < nodes.size(); ++j) {
+            double dist = getDistance(nodes[i], nodes[j]);
+            if (!visited[j] && dist < min_dist) {
+                min_dist = dist;
+                idx = j;
+            }
+        }
+        visited[idx] = true;
+        std::swap(nodes[i + 1], nodes[idx]);
+    }
+
+    // Greedy 알고리즘을 활용하여 경로 최적화
+    for (int i = 1; i < nodes.size() - 1; ++i) {
+        if (getRandomIntVal(0, 1) == 0) {
+            continue;
+        }
+        double min_dist = std::numeric_limits<double>::max();
+        int min_idx = -1;
+        for (int j = i + 1; j < nodes.size() - 1; ++j) {
+            double dist = getDistance(nodes[i - 1], nodes[j]) +
+                          getDistance(nodes[i], nodes[j + 1]) -
+                          getDistance(nodes[i - 1], nodes[i]) -
+                          getDistance(nodes[j], nodes[j + 1]);
+            if (dist < min_dist) {
+                min_dist = dist;
+                min_idx = j;
+            }
+        }
+        std::reverse(nodes.begin() + i, nodes.begin() + min_idx + 1);
+    }
+}
+
+inline double GeneticSearch::getDistance(const Node& a, const Node& b)
+{
+    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
 bool GeneticSearch::compChromosome(const Chromosome &c1, const Chromosome &c2)
 {
-  	return c1.fitnessVal < c2.fitnessVal;
+    return c1.fitnessVal < c2.fitnessVal;
 }
 
 bool GeneticSearch::compCoord(const Node &a, const Node &b)
@@ -136,18 +208,20 @@ bool GeneticSearch::compCoord(const Node &a, const Node &b)
     return pair<int, int>(a.y, a.x) < pair<int, int>(b.y, b.x);
 }
 
-inline double GeneticSearch::getDistance(const Node& a, const Node& b)
+void GeneticSearch::updateOperationRate()
 {
-	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+    maxCrossoverRate *= (1 - coolingRate);
+    maxCrossoverRate = max(maxCrossoverRate, 5.0);
+    maxMutateRate *= (1 - coolingRate);
+    maxMutateRate = max(maxMutateRate, 0.3);
 }
 
 int GeneticSearch::getRandomIntVal(int lo, int hi)
 {
-	if(lo > hi) swap(lo, hi); 
-	//std::random_device rd;
-  	//std::mt19937 gen(rd());
-  	//std::uniform_int_distribution<int> dis(lo, hi);
-	//return //dis(gen);
-	return (rand() % (hi + 1 - lo) + lo);
+    if(lo > hi) swap(lo, hi);
+    //std::random_device rd;
+    //std::mt19937 gen(rd());
+    //std::uniform_int_distribution<int> dis(lo, hi);
+    //return dis(gen);
+    return (rand() % (hi + 1 - lo) + lo);
 }
-	
