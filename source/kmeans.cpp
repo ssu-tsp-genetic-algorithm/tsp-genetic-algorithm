@@ -63,61 +63,21 @@ vector<Node> KmeansGeneticSearch::getCenters(){
 }
 
 /**
- * 클러스터링 후 각 군집별 랜덤하게 초기 유전자 형성
- * @param population
- */
-void KmeansGeneticSearch::initPopulation(vector<Chromosome> &population)
-{
-    //클러스터링 실행
-    kmeansClustering(clusteredLabel, centers, cities, k);
-
-    //k개의 군집 생성
-    vector<Node> group[k];
-    for(int i=1; i<cities.size(); i++)
-    {
-        group[clusteredLabel.at<int>(i, 0)].push_back(cities[i]);
-    }
-
-    //군집 내 랜덤 생성
-    random_device rd;
-    mt19937 g(rd());
-
-    population.clear();
-    for(int i=0; i<populationSize; i++)
-    {
-        for(int j=0;j<3;j++)
-            shuffle(group[j].begin(), group[j].end(), g);
-
-        //첫 노드의 클러스터에 따라 초기 gene 형성
-        vector<Node> tmp = {cities[0]};
-        int firstClusterNum = clusteredLabel.at<int>(0,0);
-        for(int i=firstClusterNum;i<k;i++)
-            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
-        for(int i=0;i<firstClusterNum;i++)
-            tmp.insert(tmp.end(), group[i].begin(), group[i].end());
-
-        population.push_back({tmp, 0.0f});
-    }
-}
-
-/**
  * 클러스터링 후 각 군집별 그리디 알고리즘을 통해 초기 유전자 형성
  * @param population
  */
-void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &population)
+void KmeansGeneticSearch::initPopulation(vector<Chromosome> &population)
 {
     //[groupNum][idx] : groupNum 영역의 idx번째 도시 (node.id가 저장)
     vector<int> citiesGroup[k];
     //클러스터 내 인접행렬 [u][v] : t
     vector<vector<pair<double, int> > > adj;
-    //클러스터 내 그리디 적용 시중복 체크
+    //클러스터 내 그리디 적용 시 중복 체크
     vector<bool> visited(cities.size(), false);
 
     //클러스터링 실행
     kmeansClustering(clusteredLabel, centers, cities, k);
 
-    //k개의 군집 생성
-    vector<Node> group[k];
     for(int i=0; i<cities.size(); i++)
     {
         int groupNum = clusteredLabel.at<int>(i, 0);
@@ -156,7 +116,6 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
         while(route[i].size() < currGroup.size())
         {
             int next = -1;
-             //연결된 노드 중에서 가장 짧은 거리를 가진 노드를 다음 노드로 선택
             for(auto& edge : adj[curr])
             {
                 int node = edge.second;
@@ -167,33 +126,25 @@ void KmeansGeneticSearch::initPopulationWithGreedy(vector<Chromosome> &populatio
                 }
             }
 
-            // 다음 노드를 현재 노드로 업데이트하고 경로에 추가
+            // 다음 노드를 현재 노드로 업데이트 후 경로에 추가
             curr = next;
             route[i].push_back(cities[curr]);
             visited[curr] = true;
         }
     }
-
-    std::random_device rd;
-    std::mt19937 g(rd());
     vector<Node> tmp;
 
     //첫 노드의 클러스터 번호
     int firstClusterNum = clusteredLabel.at<int>(0,0);
-    //초기 gene을 구성할 클러스터의 순서
-    vector<int> clustersOrder(k);
-
-    // 클러스터의 순서 랜덤 배열
-    for(int i=0; i<=k; i++) clustersOrder[i] = i;
-    swap(clustersOrder[0], clustersOrder[firstClusterNum]);
 
     Chromosome initialChromosome;
 
     for(int i=0; i<populationSize; i++)
     {
-        std::shuffle(clustersOrder.begin()+1, clustersOrder.end(),g);
-        for(int o=0;o<k;o++)
-            tmp.insert(tmp.end(), route[clustersOrder[o]].begin(), route[clustersOrder[o]].end());
+        for(int c=firstClusterNum;c<k;c++)
+            tmp.insert(tmp.end(), route[c].begin(), route[c].end());
+        for(int c=0;c<firstClusterNum;c++)
+            tmp.insert(tmp.end(), route[c].begin(), route[c].end());
         initialChromosome.gene = tmp;
         population.push_back(initialChromosome);
     }
@@ -207,8 +158,6 @@ void KmeansGeneticSearch::initPopulationWithConvexHull(vector<Chromosome>& popul
 {
     //[groupNum][idx] : groupNum 영역의 idx번째 도시 (node.id가 저장)
     vector<vector<NodeCH>> citiesGroup(k);
-    //클러스터 내 인접행렬 [u][v] : t
-    vector<vector<pair<double, int> > > adj;
     //중복 체크
     vector<bool> visited(cities.size(), false);
     Chromosome initialChromosome;
@@ -224,14 +173,14 @@ void KmeansGeneticSearch::initPopulationWithConvexHull(vector<Chromosome>& popul
         citiesGroup[groupNum].push_back({cities[i], 0, 0});
     }
 
-    adj.resize(cities.size()+1);
+    int firstClusterNum = clusteredLabel.at<int>(0,0);
 
     //Convex Hull 알고리즘 실행
     for(int i=0; i<k; i++)
     {
         vector<Node> convexHull = createConvexHullRoute(i, citiesGroup);
 
-        if(i==0) //시작 정점인 경우
+        if(i==firstClusterNum) //시작 정점인 경우
         {
             const Node& stNode = cities[0];
             int stIdx = find_if(convexHull.begin(), convexHull.end(), [stNode](Node& n){
@@ -362,4 +311,29 @@ int KmeansGeneticSearch::getCCwValue(const Node& a, const Node& b, const Node& c
 {
     double result = (b.x-a.x)*(c.y-a.y) - (b.y-a.y)*(c.x-a.x);
     return result == 0 ? 0 : (result > 0 ? 1 : -1);
+}
+
+
+/**
+ * 클러스터의 중심과 가장 가까운 거리의 노드 id반환
+ * @param group
+ * @param clusterNum
+ * @return 노드의 id
+ */
+int KmeansGeneticSearch::getCenterNode(vector<Node> &group, int clusterNum)
+{
+    double min = 1e9;
+    int center = -1;
+    double currDist = -1;
+//    {centers.at<float>(0,0), centers.at<float>(0,1)}
+    for(int i=0;i<group.size();i++)
+    {
+        currDist = getDistance({centers.at<float>(0,0), centers.at<float>(0,1)}, group[i]);
+        if(currDist<min)
+        {
+            min = currDist;
+            center = i;
+        }
+    }
+    return center;
 }

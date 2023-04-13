@@ -26,8 +26,10 @@ public:
 
     GeneticSearch(const vector<Node>& newCities);
 
+    //초기에 설정할 염색체가 없다면? 랜덤 생성
     void initPopulation(vector<Chromosome>& population);
 
+    //초기에 설정할 염색체가 있다면? (두부, 클러스터링 등)
     void initPopulation(vector<Chromosome>& population, const Chromosome& targetChromosome);
 
     //population의 적합도를 평가하고 해당 값에 따라 오름차순으로 정렬
@@ -39,12 +41,17 @@ public:
     //순서 crossover 연산
     Chromosome crossover(const Chromosome& p1, const Chromosome& p2);
 
-    //단순 swap을 통한 mutate 연산
+    //entrance 함수
     bool mutate(vector<Node>& child);
 
-    bool swapMutate(vector<Node> &child);
+    //단순 swap을 통한 mutate 연산
+    bool swapMutate(vector<Node>& child);
 
+    //reverse 연산을 통한 mutate 연산
     bool inverseMutate(vector<Node>& child);
+
+    //수선 연산
+    void repair(Chromosome& chromosome);
 
 private:
     //fitness 값을 비교하여 오름차순 조건을 반환
@@ -56,21 +63,30 @@ private:
 private:
 
     //crossover 연산의 최대 범위 비율 (백분율)
-    const int maxCrossoverRate = 65;
+    double maxCrossoverRate = 50;
 
-    //Mutate 연산의 최대 범위 비율 (백분율)
-    const int maxMutateRate = 5;
+    //mutate 연산의 최대 범위 비율 (백분율)
+    double maxMutateRate = 10;
+
+    //담금질 기법
+    const double coolingRate = 0.00001;
 
     //최대 generation 수
-    const int genThres = 100000;
+    const int genThres = 500000;
 
 private:
 
     //최소 fitnessValue
     double minFitnessValue = std::numeric_limits<double>::max();
 
+    //최소 fitness를 가지는 염색체
+    Chromosome minChromosome;
+
     //현재 Gen의 평균 fitnessValue
     double currFitnessAvgValue = 0.0f;
+
+    //MST 기반의 Repair 연산을 위한것
+    vector<pair<double, pair<int, int>>> distances;
 
 protected:
 //도시 좌표 정보
@@ -84,6 +100,8 @@ public:
     //최소 fitness 반환
     double getMinimumFitness(){ return minFitnessValue; }
 
+    Chromosome& getMinimumChromosome() { return minChromosome; }
+
     //현재 Gen의 평균 Fitness
     double getCurrFitnessAvg(){ return currFitnessAvgValue; }
 
@@ -96,7 +114,6 @@ public:
     //두 좌표간의 거리를 구함
     static double getDistance(const Node& a, const Node& b);
 
-    vector<Node>& getCities() { return cities; }
-
-    void setCities(const vector<Node>& newCities) { cities = newCities; };
+    //담금질 기법
+    void updateOperationRate();
 };

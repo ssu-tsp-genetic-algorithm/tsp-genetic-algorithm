@@ -26,14 +26,18 @@ public:
     //노드들을 openCV의 Mat으로 변환
     cv::Mat convertNodesToMat(const vector<Node> & nodes);
 
-    //클러스터링 기반으로 초기 모집단 랜덤 설정
+    //클러스터링 후 클러스터 내 Greedy 알고리즘을 통해 초기 모집단 설정
     void initPopulation(vector<Chromosome>& population);
+
+    void initPopulationWithRandom(vector<Chromosome> &population);
+
+    //클러스터링 후 클러스터 내 클러스터의 중심을 중심으로 Greedy 알고리즘을 통해 초기 모집단 설정
+    void initPopulationWithMST(vector<Chromosome> &population);
 
     //각 클러스터의 중심위치 반환.
     vector<Node> getCenters();
 
-    //클러스터링 후 클러스터 내 그리디 알고리즘을 통해 초기 모집단 설정
-    void initPopulationWithGreedy(vector<Chromosome> &population);
+    int getCenterNode(vector<Node>& group, int clusterNum);
 
     //클러스터링 후 클러스터 내 Convex Hull 알고리즘을 통해 초기 모집단 설정
     void initPopulationWithConvexHull(vector<Chromosome>& population);
