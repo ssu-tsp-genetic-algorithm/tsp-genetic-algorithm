@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Install script for directory: E:/Other Project/oriburger_genetic_tsp
-=======
-# Install script for directory: D:/tsp-genetic-algorithm
->>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,11 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-<<<<<<< HEAD
   set(CMAKE_OBJDUMP "C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/objdump.exe")
-=======
-  set(CMAKE_OBJDUMP "C:/Program Files/JetBrains/CLion 2023.1/bin/mingw/bin/objdump.exe")
->>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -53,9 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-<<<<<<< HEAD
 file(WRITE "E:/Other Project/oriburger_genetic_tsp/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
-=======
-file(WRITE "D:/tsp-genetic-algorithm/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
->>>>>>> 1f6ec017649fdf3eb1eba4cb26da891c7aba5509
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

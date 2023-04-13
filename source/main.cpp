@@ -42,8 +42,20 @@ vector<Node> readDataFromCsv(string fileLocation)
     return retCities;
 }
 
-// CSV 파일로 출력하는 함수
-void writeDataToCsv(const std::string& filename, Chromosome& bestChromosome)
+void writeDataToCsv(const string& filename, const vector<double>& fitnessPer100)
+{
+    ofstream outFile(filename);
+    if (!outFile.is_open()) return;
+
+    for(int i=0; i<fitnessPer100.size(); i++)
+        outFile << fitnessPer100[i]<<"\n";
+
+    cout<<"write fitness on "<<filename<<"\n";
+    outFile.close();
+}
+
+// CSV 파일로 최소 경로를 출력하는 함수
+void writeDataToCsv(const string& filename, Chromosome& bestChromosome)
 {
     ofstream outFile(filename);
     if (!outFile.is_open()) return;
@@ -64,6 +76,7 @@ int main()
 	srand((unsigned)time(NULL));
 	vector<Node> cities = readDataFromCsv("../2023_AI_TSP.csv");
 	vector<Chromosome> population;
+    vector<double> fitnessPer100;
 
     Chromosome initialChromosome;
 
@@ -71,11 +84,11 @@ int main()
 	GeneticSearch* tspSolver = new GeneticSearch(subRouteFinder->getCities());
 
     //---------Tufu 영역 기반의 Convex-Hull 알고리즘 -------------
-    const int tufuOrder[25] = {8, 3, 4, 9, 14
-            , 13, 18, 19,24, 23
-            , 22, 17, 16,21,20
-            , 15, 10, 5, 0, 1
-            , 2, 7, 6, 11, 12};
+    const int tufuOrder[25] = {8,  3,  4,  9, 14
+                            , 13, 18, 19, 24, 23
+                            , 22, 17, 16, 21, 20
+                            , 15, 10, 5,   0,  1
+                            ,  2, 7,  6,  11, 12};
 
     for(int i=0; i<25; i++)
     {
@@ -89,7 +102,6 @@ int main()
             convexHull.insert(convexHull.end(), convexHull.begin(), convexHull.begin()+stIdx);
             convexHull.erase(convexHull.begin(), convexHull.begin()+stIdx);
         }
-
         initialChromosome.gene.insert(initialChromosome.gene.end(), convexHull.begin(), convexHull.end());
     }
 
@@ -104,21 +116,32 @@ int main()
 		//부모 선택 & replace
 		tspSolver->selectParents(population);
 
-		//crossover
+        //------------ 교차 연산  ---------------------------------
 		for(int cIdx=0; cIdx<tspSolver->getPopulationSize(); cIdx++)
 		{
 			int tIdx = tspSolver->getRandomIntVal(cIdx+1, population.size()-1);
 			Chromosome newChild = tspSolver->crossover(population[cIdx], population[tIdx]);
 
-            //25% 확률의 mutate 연산
-            if(tspSolver->getRandomIntVal(1, 100) >= 60)
+            //20% 확률의 mutate 연산
+            if(tspSolver->getRandomIntVal(1, 100) <= 25)
                 tspSolver->mutate(population[cIdx].gene);
 			population.push_back(newChild);
 		}
 		cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
+        tspSolver->updateOperationRate(); //유사담금질 기법
+
+        //------------csv에 쓰기 ---------------------------------
+        if((currGen+1) % 50000 == 0)
+        {
+            string filename = "../output/searchResult_" + to_string(currGen+1) + "_gen.csv";
+            writeDataToCsv(filename, population[0]);
+        }
+        if((currGen+1) % 100 == 0)
+            fitnessPer100.push_back(population[0].fitnessVal);
 	}
-    writeDataToCsv("../searchResult.csv", population[0]);
-	system("pause");
+    writeDataToCsv("../output/bestRoute.csv", tspSolver->getMinimumChromosome());
+    writeDataToCsv("../output/fitnessChange.csv", fitnessPer100);
+    system("pause");
 
 	delete tspSolver;
 }
