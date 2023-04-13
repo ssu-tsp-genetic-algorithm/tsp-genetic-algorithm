@@ -13,7 +13,7 @@ GeneticSearch::GeneticSearch(const vector<Node>& newCities)
 
 void GeneticSearch::initPopulation(vector<Chromosome>& population)
 {
-    if(population[0].gene.size()==0) return;
+    if(cities.size()==0) return;
 
     random_device rd;
     mt19937 g(rd());
@@ -21,7 +21,7 @@ void GeneticSearch::initPopulation(vector<Chromosome>& population)
     population.clear();
     for(int i=0; i<populationSize; i++)
     {
-        vector<Node> temp = population[0].gene;
+        vector<Node> temp = cities;
         shuffle(temp.begin()+1, temp.end(), g);
         population.push_back({temp, 0.0f});
     }
@@ -69,15 +69,15 @@ void GeneticSearch::selectParents(vector<Chromosome>& population)
     sort(population.begin(), population.end(), compChromosome);
 
     //순위 기반 선택 -> populationSize 만큼의 상위 집단을 고름
-    static const int randParentCnt = 3;
-    if(population.size() >= populationSize + randParentCnt)
-        population.erase(population.begin()+populationSize + randParentCnt, population.end());
+    static const int randParentCnt = 0;
+    const int eraseCount = population.size() - populationSize - randParentCnt;
 
-    for(int i=0; i<randParentCnt; i++)
+    for(int i=0; i<eraseCount; i++)
     {
-        int eraseIdx = getRandomIntVal(0, population.size()-randParentCnt);
+        int eraseIdx = getRandomIntVal(populationSize, population.size()-1);
         population.erase(population.begin() + eraseIdx);
     }
+    population.erase(population.begin() + populationSize, population.end());
 }
 
 Chromosome GeneticSearch::crossover(const Chromosome& p1, const Chromosome& p2)

@@ -21,6 +21,8 @@ public:
     //areaId의 오름차순 정렬 조건 반환
     static bool compAreaId(const Node& a, const Node& b);
 
+    vector<Node> createInitialConvexHull(const int& areaId);
+
     vector<Node> createConvexHullRoute(const int& areaId);
 
     //해당 영역의 id를 반환

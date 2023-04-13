@@ -25,10 +25,10 @@ TreeRouteFinder::TreeRouteFinder(const vector<Node> &newCities)
 
 bool TreeRouteFinder::compAreaId(const Node &a, const Node &b) { return a.areaId < b.areaId; }
 
-vector<Node> TreeRouteFinder::createConvexHullRoute(const int& areaId)
+vector<Node> TreeRouteFinder::createInitialConvexHull(const int& areaId)
 {
     vector<NodeCH>& currArea = citiesGroup[areaId];
-    vector<bool> visited(currArea.size(), false);
+    visited = vector<bool>(currArea.size(), false);
 
     sort(currArea.begin(), currArea.end(), compNode);
     for(int i=1; i<currArea.size(); i++) //u - v 모든 쌍을 시도
@@ -65,62 +65,81 @@ vector<Node> TreeRouteFinder::createConvexHullRoute(const int& areaId)
         stk.push(next);
     }
 
-    vector<Node> ret;
+    vector<Node> convexHull;
     while(!stk.empty())
     {
-        ret.push_back(citiesGroup[areaId][stk.top()].node);
+        convexHull.push_back(citiesGroup[areaId][stk.top()].node);
         visited[stk.top()] = true;
         stk.pop();
     }
+    return convexHull;
+}
 
-    for(int i=0; i<currArea.size(); i++)
+vector<Node> TreeRouteFinder::createConvexHullRoute(const int& areaId)
+{
+    vector<Node> convexHull = createInitialConvexHull(areaId);
+    vector<NodeCH>& currArea = citiesGroup[areaId];
+
+    vector<pair<int, int> > insertDataList;
+
+    cout<<currArea.size()<<'\n';
+    while(convexHull.size() != currArea.size())
     {
-        if(visited[i]) continue;
-        Node& targetNode = currArea[i].node;
+        for (int i = 0; i < currArea.size(); i++)
+        {
+            if (visited[i]) continue;
+            const Node &targetNode = currArea[i].node;
+            double minLength = 1e6f;
+
+            pair<int, int> insertData;
+            for (int j = 0; j < convexHull.size(); j++)
+            {
+                const Node &p = convexHull[j];
+                const Node &q = convexHull[(j + 1) % convexHull.size()];
+
+                double dist = GeneticSearch::getDistance(p, targetNode)
+                              + GeneticSearch::getDistance(targetNode, q)
+                              - GeneticSearch::getDistance(p, q);
+
+                if (dist < minLength)
+                {
+                    insertData = {i, j};
+                    minLength = dist;
+                }
+            }
+            insertDataList.push_back(insertData);
+        }
 
         double minLength = 1e6f;
-        vector<int> insertPosCandidate;
-        for(int j=0; j<ret.size(); j++)
+        int insertPos = -1, insertTargetIdx = -1;
+
+        for (auto &c: insertDataList)
         {
-            const Node& p = ret[j];
-            const Node& q = ret[(j+1) % ret.size()];
+            if (visited[c.first]) continue;
+            const Node &targetNode = currArea[c.first].node;
 
-            double dist = GeneticSearch::getDistance(targetNode, p)
-                        + GeneticSearch::getDistance(targetNode, q)
-                        - GeneticSearch::getDistance(p, q);
+            const Node &a = convexHull[c.second];
+            const Node &b = convexHull[(c.second + 1) % convexHull.size()];
 
-            if(dist <= minLength)
+            double dist = (GeneticSearch::getDistance(a, targetNode)
+                           + GeneticSearch::getDistance(targetNode, b))
+                           / GeneticSearch::getDistance(a, b);
+
+            if (dist < minLength)
             {
-                if(dist == minLength) insertPosCandidate.push_back(j);
-                else insertPosCandidate = {j};
+                insertPos = c.second;
+                insertTargetIdx = c.first;
                 minLength = dist;
             }
         }
-
-        minLength = 1e6f;
-        int insertPos = -1;
-
-        for(auto &candidate : insertPosCandidate)
+        if (insertPos != -1)
         {
-            const Node& p = ret[candidate];
-            const Node& q = ret[(candidate+1) % ret.size()];
-
-            double dist = (GeneticSearch::getDistance(p, targetNode)
-                          + GeneticSearch::getDistance(targetNode, q))
-                          / GeneticSearch::getDistance(p, q);
-
-            if(dist < minLength)
-            {
-                dist = minLength;
-                insertPos = candidate;
-            }
+            visited[insertTargetIdx] = true;
+            convexHull.insert(convexHull.begin() + insertPos + 1, currArea[insertTargetIdx].node);
         }
-
-        if(insertPos != -1)
-            ret.insert(ret.begin() + insertPos, targetNode);
+        insertDataList.clear();
     }
-
-    return ret;
+    return convexHull;
 }
 
 int TreeRouteFinder::getAreaId(const Node &a) const

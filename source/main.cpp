@@ -71,6 +71,21 @@ void writeDataToCsv(const string& filename, Chromosome& bestChromosome)
     outFile.close();
 }
 
+void writeResultToCsv(const string& filename, Chromosome& bestChromosome)
+{
+    ofstream outFile(filename);
+    if (!outFile.is_open()) return;
+
+    outFile << bestChromosome.fitnessVal<< endl;
+    const int geneLen = bestChromosome.gene.size();
+    for(int i=0; i < geneLen; i++)
+    {
+        outFile << i << ", " << bestChromosome.gene[i].id <<"\n";
+    }
+    cout<<"write result on "<<filename<<"\n";
+    outFile.close();
+}
+
 int main()
 {
 	srand((unsigned)time(NULL));
@@ -81,7 +96,7 @@ int main()
     Chromosome initialChromosome;
 
     TreeRouteFinder* subRouteFinder = new TreeRouteFinder(cities);
-	GeneticSearch* tspSolver = new GeneticSearch(subRouteFinder->getCities());
+	GeneticSearch* tspSolver = new GeneticSearch(cities);
 
     //---------Tufu 영역 기반의 Convex-Hull 알고리즘 -------------
     const int tufuOrder[25] = {8,  3,  4,  9, 14
@@ -98,7 +113,7 @@ int main()
         {
             const Node& stNode = cities[0];
             int stIdx = find_if(convexHull.begin(), convexHull.end(), [stNode](Node& n){
-                return n.y == stNode.y && n.x == stNode.x; }) - convexHull.begin();
+                                return n.y == stNode.y && n.x == stNode.x; }) - convexHull.begin();
             convexHull.insert(convexHull.end(), convexHull.begin(), convexHull.begin()+stIdx);
             convexHull.erase(convexHull.begin(), convexHull.begin()+stIdx);
         }
@@ -140,6 +155,7 @@ int main()
             fitnessPer100.push_back(population[0].fitnessVal);
 	}
     writeDataToCsv("../output/bestRoute.csv", tspSolver->getMinimumChromosome());
+    writeResultToCsv("../output/Result.csv", tspSolver->getMinimumChromosome());
     writeDataToCsv("../output/fitnessChange.csv", fitnessPer100);
     system("pause");
 

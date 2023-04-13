@@ -65,17 +65,16 @@ private:
     const int populationSize = 50;
 
     //crossover 연산의 최대 범위 비율 (백분율)
-
     double maxCrossoverRate = 50;
 
     //crossover 연산의 최대 범위 비율 (백분율)
-    double maxMutateRate = 10;
+    double maxMutateRate = 5;
 
     //담금질 기법
     const double coolingRate = 0.0001;
 
     //최대 generation 수
-    const int genThres = 500000;
+    const int genThres = 50000;
 
 private:
     //도시 좌표 정보
