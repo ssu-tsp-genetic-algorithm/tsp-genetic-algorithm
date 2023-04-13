@@ -72,7 +72,7 @@ private:
     const double coolingRate = 0.00001;
 
     //최대 generation 수
-    const int genThres = 500000;
+    const int genThres = 10000;
 
 private:
 

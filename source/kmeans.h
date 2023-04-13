@@ -42,8 +42,11 @@ public:
     //클러스터링 후 클러스터 내 Convex Hull 알고리즘을 통해 초기 모집단 설정
     void initPopulationWithConvexHull(vector<Chromosome>& population);
 
-    //클러스터 별 Convex Hull 알고리즘 실행결과 반환.
+    //클러스터 별 Convex Hull 알고리즘에 의한 경로 반환
     vector<Node> createConvexHullRoute(int i, vector<vector<NodeCH>> & citiesGroup);
+
+    //클러스터 별 Covex Hull 알고리즘 실행.
+    vector<Node> createInitialConvexHull(const int& groupId, vector<vector<NodeCH>> & citiesGroup, vector<bool>& visited);
 
     static inline bool compNode(const NodeCH &a, const NodeCH &b);
 

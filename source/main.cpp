@@ -71,6 +71,21 @@ void writeDataToCsv(const string& filename, Chromosome& bestChromosome)
     outFile.close();
 }
 
+void writeResultToCsv(const string& filename, Chromosome& bestChromosome)
+{
+    ofstream outFile(filename);
+    if (!outFile.is_open()) return;
+
+    const int geneLen = bestChromosome.gene.size();
+    for(int i=0; i < geneLen; i++)
+    {
+        outFile << bestChromosome.gene[i].id<<endl;
+    }
+    outFile<<bestChromosome.gene[0].id<<endl;
+    cout<<"write result on "<<filename<<"\n";
+    outFile.close();
+}
+
 int main()
 {
     srand((unsigned)time(NULL));
@@ -117,6 +132,7 @@ int main()
     }
     writeDataToCsv("../output/bestRoute.csv", tspSolver->getMinimumChromosome());
     writeDataToCsv("../output/fitnessChange.csv", fitnessPer100);
+    writeResultToCsv("../output/solution_09.csv",tspSolver->getMinimumChromosome());
     system("pause");
 
     delete tspSolver;

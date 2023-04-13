@@ -151,6 +151,79 @@ void KmeansGeneticSearch::initPopulation(vector<Chromosome> &population)
 }
 
 /**
+ * 클러스터 별 Convex Hull 알고리즘 실행
+ * @param groupId
+ * @param citiesGroup
+ * @return vector<Node> Convex Hull 알고리즘 실행 결과
+ */
+vector<Node> KmeansGeneticSearch::createConvexHullRoute(int groupId, vector<vector<NodeCH>> & citiesGroup)
+{
+    vector<NodeCH>& currArea = citiesGroup[groupId];
+    vector<bool> visited(currArea.size(), false);
+    vector<Node> convexHull = createInitialConvexHull(groupId, citiesGroup, visited);
+
+    vector<pair<int, int> > insertDataList;
+
+    while(convexHull.size() != currArea.size())
+    {
+        for (int i = 0; i < currArea.size(); i++)
+        {
+            if (visited[i]) continue;
+            const Node &targetNode = currArea[i].node;
+            double minLength = 1e6f;
+
+            pair<int, int> insertData;
+            for (int j = 0; j < convexHull.size(); j++)
+            {
+                const Node &p = convexHull[j];
+                const Node &q = convexHull[(j + 1) % convexHull.size()];
+
+                double dist = GeneticSearch::getDistance(p, targetNode)
+                              + GeneticSearch::getDistance(targetNode, q)
+                              - GeneticSearch::getDistance(p, q);
+
+                if (dist < minLength)
+                {
+                    insertData = {i, j};
+                    minLength = dist;
+                }
+            }
+            insertDataList.push_back(insertData);
+        }
+
+        double minLength = 1e6f;
+        int insertPos = -1, insertTargetIdx = -1;
+
+        for (auto &c: insertDataList)
+        {
+            if (visited[c.first]) continue;
+            const Node &targetNode = currArea[c.first].node;
+
+            const Node &a = convexHull[c.second];
+            const Node &b = convexHull[(c.second + 1) % convexHull.size()];
+
+            double dist = (GeneticSearch::getDistance(a, targetNode)
+                           + GeneticSearch::getDistance(targetNode, b))
+                          / GeneticSearch::getDistance(a, b);
+
+            if (dist < minLength)
+            {
+                insertPos = c.second;
+                insertTargetIdx = c.first;
+                minLength = dist;
+            }
+        }
+        if (insertPos != -1)
+        {
+            visited[insertTargetIdx] = true;
+            convexHull.insert(convexHull.begin() + insertPos + 1, currArea[insertTargetIdx].node);
+        }
+        insertDataList.clear();
+    }
+    return convexHull;
+}
+
+/**
  * 클러스터링 후 각 군집별 Convex Hull 알고리즘을 통해 초기 유전자 형성
  * @param population
  */
@@ -197,16 +270,10 @@ void KmeansGeneticSearch::initPopulationWithConvexHull(vector<Chromosome>& popul
         population.push_back(initialChromosome);
 }
 
-/**
- * 클러스터 별 Convex Hull 알고리즘 실행
- * @param groupId
- * @param citiesGroup
- * @return vector<Node> Convex Hull 알고리즘 실행 결과
- */
-vector<Node> KmeansGeneticSearch::createConvexHullRoute(int groupId, vector<vector<NodeCH>> & citiesGroup)
+vector<Node> KmeansGeneticSearch::createInitialConvexHull(const int& groupId, vector<vector<NodeCH>> & citiesGroup, vector<bool>& visited)
 {
     vector<NodeCH>& currArea = citiesGroup[groupId];
-    vector<bool> visited(currArea.size(), false);
+    visited = vector<bool>(currArea.size(), false);
 
     sort(currArea.begin(), currArea.end(), compNode);
     for(int i=1; i<currArea.size(); i++) //u - v 모든 쌍을 시도
@@ -243,62 +310,14 @@ vector<Node> KmeansGeneticSearch::createConvexHullRoute(int groupId, vector<vect
         stk.push(next);
     }
 
-    vector<Node> ret;
+    vector<Node> convexHull;
     while(!stk.empty())
     {
-        ret.push_back(citiesGroup[groupId][stk.top()].node);
+        convexHull.push_back(citiesGroup[groupId][stk.top()].node);
         visited[stk.top()] = true;
         stk.pop();
     }
-
-    for(int i=0; i<currArea.size(); i++)
-    {
-        if(visited[i]) continue;
-        Node& targetNode = currArea[i].node;
-
-        double minLength = 1e6f;
-        vector<int> insertPosCandidate;
-        for(int j=0; j<ret.size(); j++)
-        {
-            const Node& p = ret[j];
-            const Node& q = ret[(j+1) % ret.size()];
-
-            double dist = GeneticSearch::getDistance(targetNode, p)
-                          + GeneticSearch::getDistance(targetNode, q)
-                          - GeneticSearch::getDistance(p, q);
-
-            if(dist <= minLength)
-            {
-                if(dist == minLength) insertPosCandidate.push_back(j);
-                else insertPosCandidate = {j};
-                minLength = dist;
-            }
-        }
-
-        minLength = 1e6f;
-        int insertPos = -1;
-
-        for(auto &candidate : insertPosCandidate)
-        {
-            const Node& p = ret[candidate];
-            const Node& q = ret[(candidate+1) % ret.size()];
-
-            double dist = (GeneticSearch::getDistance(p, targetNode)
-                           + GeneticSearch::getDistance(targetNode, q))
-                          / GeneticSearch::getDistance(p, q);
-
-            if(dist < minLength)
-            {
-                dist = minLength;
-                insertPos = candidate;
-            }
-        }
-
-        if(insertPos != -1)
-            ret.insert(ret.begin() + insertPos, targetNode);
-    }
-
-    return ret;
+    return convexHull;
 }
 
 bool KmeansGeneticSearch::compNode(const NodeCH &a, const NodeCH &b)
