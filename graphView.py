@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # csv 파일 읽어오기
-df = pd.read_csv("./output/bestRoute.csv", header=None)
+df = pd.read_csv("./output/searchResult_100000_gen.csv", header=None)
 
 # 경로의 total cost
 cost = df.iloc[0,0]

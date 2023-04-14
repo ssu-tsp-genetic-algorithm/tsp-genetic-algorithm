@@ -98,32 +98,18 @@ int main()
     TreeRouteFinder* subRouteFinder = new TreeRouteFinder(cities);
 	GeneticSearch* tspSolver = new GeneticSearch(cities);
 
-    //---------Tufu 영역 기반의 Convex-Hull 알고리즘 -------------
-    const int tufuOrder[25] = {8,  3,  4,  9, 14
-                            , 13, 18, 19, 24, 23
-                            , 22, 17, 16, 21, 20
-                            , 15, 10, 5,   0,  1
-                            ,  2, 7,  6,  11, 12};
+    vector<Node> convexHull = subRouteFinder->createConvexHullRoute(0);
 
-    for(int i=0; i<25; i++)
-    {
-        vector<Node> convexHull = subRouteFinder->createConvexHullRoute(tufuOrder[i]);
+    const Node& stNode = cities[0];
+    int stIdx = find_if(convexHull.begin(), convexHull.end(), [stNode](Node& n){
+                        return n.y == stNode.y && n.x == stNode.x; }) - convexHull.begin();
+    convexHull.insert(convexHull.end(), convexHull.begin(), convexHull.begin()+stIdx);
+    convexHull.erase(convexHull.begin(), convexHull.begin()+stIdx);
 
-        if(i==0) //시작 정점이라면?
-        {
-            const Node& stNode = cities[0];
-            int stIdx = find_if(convexHull.begin(), convexHull.end(), [stNode](Node& n){
-                                return n.y == stNode.y && n.x == stNode.x; }) - convexHull.begin();
-            convexHull.insert(convexHull.end(), convexHull.begin(), convexHull.begin()+stIdx);
-            convexHull.erase(convexHull.begin(), convexHull.begin()+stIdx);
-        }
-        initialChromosome.gene.insert(initialChromosome.gene.end(), convexHull.begin(), convexHull.end());
-    }
+    initialChromosome.gene.insert(initialChromosome.gene.end(), convexHull.begin(), convexHull.end());
 
     //---------위에서 구한 모집단을 기반으로 GA 수행------------------
-
 	tspSolver->initPopulation(population, initialChromosome);
-
 	tspSolver->fitness(population);
 
 	for(int currGen = 0; currGen < tspSolver->getGenerationThres(); currGen++)
@@ -143,7 +129,6 @@ int main()
 			population.push_back(newChild);
 		}
 		cout<<currGen+1<<" Gen - currAvg "<<tspSolver->getCurrFitnessAvg()<<" /  totalMin : "<<tspSolver->getMinimumFitness()<<'\n';
-        tspSolver->updateOperationRate(); //유사담금질 기법
 
         //------------csv에 쓰기 ---------------------------------
         if((currGen+1) % 50000 == 0)

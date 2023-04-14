@@ -7,7 +7,7 @@ using namespace std;
 struct NodeCH
 {
     Node node;
-    int p;
+    int p; //기준 정점과의 상대위치 표현
     int q;
 };
 
@@ -21,8 +21,10 @@ public:
     //areaId의 오름차순 정렬 조건 반환
     static bool compAreaId(const Node& a, const Node& b);
 
+    //초기 볼록껍질 생성
     vector<Node> createInitialConvexHull(const int& areaId);
 
+    //볼록껍질을 활용해 TSP의 해를 생성
     vector<Node> createConvexHullRoute(const int& areaId);
 
     //해당 영역의 id를 반환
@@ -35,8 +37,10 @@ private:
     //좌표 제한 (건들지마시오)
     const double coordThres = 100.0;
 
+    //CCW값을 구한다.
     static inline int getCCwValue(const Node& a, const Node& b, const Node& c);
 
+    //Graham's Scan을 위해 특정 조건에 맞게 Node를 비교한다.
     static inline bool compNode(const NodeCH& a, const NodeCH& b);
 
 

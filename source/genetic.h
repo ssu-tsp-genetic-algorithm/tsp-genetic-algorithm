@@ -50,15 +50,9 @@ public:
     //reverse 연산을 통한 mutate 연산
     bool inverseMutate(vector<Node>& child);
 
-    //수선 연산
-    void repair(Chromosome& chromosome);
-
 private:
     //fitness 값을 비교하여 오름차순 조건을 반환
     static bool compChromosome(const Chromosome& c1, const Chromosome& c2);
-
-    //좌표의 오름차순 정렬 조건 반환 (원점과 가까운 순서)
-    static bool compCoord(const Node& a, const Node& b);
 
 private:
     //모집단 Size
@@ -74,7 +68,7 @@ private:
     const double coolingRate = 0.0001;
 
     //최대 generation 수
-    const int genThres = 50000;
+    const int genThres = 500000;
 
 private:
     //도시 좌표 정보
@@ -112,7 +106,4 @@ public:
 
     //두 좌표간의 거리를 구함
     static double getDistance(const Node& a, const Node& b);
-
-    //담금질 기법
-    void updateOperationRate();
 };
